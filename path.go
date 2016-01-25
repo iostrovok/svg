@@ -132,6 +132,12 @@ func (path PATH) Z(is ...bool) PATH {
 
 // AddPart
 func (path PATH) AddPart(t string, x ...int) PATH {
+
+	// Checks true creating path
+	if len(path.parts) == 0 && t != "M" && t != "m" {
+		panic(`For PATH the first element must be "M" or "m". See https://www.w3.org/TR/SVG/paths.html`)
+	}
+
 	path.parts = append(path.parts, &pathPart{
 		Typ: t,
 		xy:  x,

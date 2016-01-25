@@ -1,7 +1,6 @@
 package svg
 
 import (
-	"fmt"
 	. "gopkg.in/check.v1"
 	"testing"
 
@@ -30,6 +29,5 @@ func (s LINETestsSuite) Test_line2(c *C) {
 
 	l := Line(1, 2, 3, 4, style.Style().StrokeRGB(10, 20, 30))
 	res := l.Source()
-	fmt.Printf("%s\n", res)
 	c.Assert(string(res), Equals, "<line x1=\"1\" y1=\"2\" x2=\"3\" y2=\"4\" style=\"stroke:rgb(10,20,30)\" />\n")
 }
