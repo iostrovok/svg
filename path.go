@@ -11,6 +11,7 @@ const (
 	formatPoint         = "%d,%d"
 	formatPartOneX      = "%d"
 	formatEllipticalArc = "%d,%d %d %d,%d %d,%d"
+	format3Point        = "%d,%d %d,%d %d,%d"
 	formatPartStart     = "%s%s"
 
 	pathTag    = `<path d="%s" %s`
@@ -71,14 +72,24 @@ func (path PATH) Inner() []Node {
 
 // Source() returns svg implementation of PATH element
 func (path PATH) Source() string {
-	//body := fmt.Sprintf(pathTag, path.x1, path.y1, path.x2, path.y2, path.st.Source())
+
 	body := []string{}
 	var last *pathPart
 	for _, p := range path.parts {
+
 		s := p.drawPart()
-		if last != nil || last.Typ != p.Typ || p.Typ == "V" || p.Typ == "v" || p.Typ == "H" || p.Typ == "h" {
+
+		leadSymbol := false
+		if p.Typ == "V" || p.Typ == "v" || p.Typ == "H" || p.Typ == "h" {
+			leadSymbol = true
+		} else if (last != nil && last.Typ != p.Typ) || (last == nil) {
+			leadSymbol = true
+		}
+
+		if leadSymbol {
 			s = fmt.Sprintf(formatPartStart, p.Typ, s)
 		}
+
 		body = append(body, s)
 		last = p
 	}
@@ -101,9 +112,9 @@ func (p *pathPart) drawPart() string {
 	case "Q", "q", "S", "s":
 		return fmt.Sprintf(formatPoint+" "+formatPoint, p.xy[0], p.xy[1], p.xy[2], p.xy[3])
 	case "C", "c":
-		return fmt.Sprintf(formatPoint+" "+formatPoint+" "+formatPoint, p.xy[0], p.xy[1], p.xy[2], p.xy[3], p.xy[4], p.xy[5])
+		return fmt.Sprintf(format3Point, p.xy[0], p.xy[1], p.xy[2], p.xy[3], p.xy[4], p.xy[5])
 	case "A", "a":
-		return fmt.Sprintf(formatEllipticalArc, p.xy[0], p.xy[1], p.xy[2], p.xy[3], p.xy[4], p.xy[5])
+		return fmt.Sprintf(formatEllipticalArc, p.xy[0], p.xy[1], p.xy[2], p.xy[3], p.xy[4], p.xy[5], p.xy[6])
 	}
 	return ""
 }
