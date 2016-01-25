@@ -19,6 +19,7 @@ const (
 	lineEndTag = `</line>`
 )
 
+// Constructor
 func Line(x1, y1, x2, y2 int, s ...style.STYLE) LINE {
 	return LINE{
 		x1: x1, x2: x2,

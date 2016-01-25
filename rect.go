@@ -20,8 +20,8 @@ const (
 	rectEndTag = `</rect>`
 )
 
+// Constructor
 func Rect(x, y, width, height int, s ...style.STYLE) RECT {
-
 	return RECT{
 		x:      x,
 		y:      y,

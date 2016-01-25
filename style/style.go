@@ -17,7 +17,7 @@ type STYLE struct {
 	tags map[string]ONESTYLE
 }
 
-// New is the SVG constructor, specifying the io.Writer where the generated SVG is written.
+// Style is the constructor
 func Style() STYLE {
 	return STYLE{
 		tags: map[string]ONESTYLE{},

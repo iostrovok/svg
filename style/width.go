@@ -15,6 +15,7 @@ type WIDTH struct {
 	value float64
 }
 
+// Constructor
 func Width(value float64) WIDTH {
 	return WIDTH{
 		value: value,

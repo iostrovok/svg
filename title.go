@@ -15,6 +15,7 @@ const (
 	titleTag = `<title>%s</title>`
 )
 
+// Constructor
 func Title(text string) TITLE {
 	return TITLE{
 		body: fmt.Sprintf(titleTag, text),
