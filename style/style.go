@@ -44,22 +44,22 @@ func (style STYLE) StrokeWidth(width float64) STYLE {
 	return style
 }
 
-func (style STYLE) Stroke(r, g, b int) STYLE {
-	style.tags[`stroke`] = Color(r, g, b)
+func (style STYLE) StrokeRGB(r, g, b int) STYLE {
+	style.tags[`stroke`] = RGB(r, g, b)
 	return style
 }
 
-func (style STYLE) StrokeStr(c string) STYLE {
-	style.tags[`stroke`] = ColorStr(c)
+func (style STYLE) Stroke(c string) STYLE {
+	style.tags[`stroke`] = Color(c)
 	return style
 }
 
 func (style STYLE) FillRGB(r, g, b int) STYLE {
-	style.tags[`fill`] = Color(r, g, b)
+	style.tags[`fill`] = RGB(r, g, b)
 	return style
 }
 
 func (style STYLE) Fill(c string) STYLE {
-	style.tags[`fill`] = ColorStr(c)
+	style.tags[`fill`] = Color(c)
 	return style
 }

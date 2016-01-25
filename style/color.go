@@ -15,8 +15,8 @@ type COLOR struct {
 	line    string
 }
 
-// New is the SVG constructor, specifying the io.Writer where the generated SVG is written.
-func Color(r, g, b int) COLOR {
+// RGB is the color constructor which gets red, green and blue color componetns as integer.
+func RGB(r, g, b int) COLOR {
 	color := COLOR{
 		r: r,
 		g: g,
@@ -30,7 +30,8 @@ func (color COLOR) RGB(r, g, b int) COLOR {
 	return color
 }
 
-func ColorStr(c string) COLOR {
+// RGB is the color constructor which gets color as string.
+func Color(c string) COLOR {
 	return COLOR{
 		line: strings.ToLower(c),
 	}
