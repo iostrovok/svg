@@ -20,16 +20,16 @@ const (
 
 type pathPart struct {
 	/*
-	   M = moveto
-	   L = lineto
-	   H = horizontal lineto
-	   V = vertical lineto
-	   C = curveto
-	   S = smooth curveto
-	   Q = quadratic Bézier curve
-	   T = smooth quadratic Bézier curveto
-	   A = elliptical Arc
-	   Z = closepath
+	   M, m = moveto
+	   L, l = lineto
+	   H, h = horizontal lineto
+	   V, v = vertical lineto
+	   C, c = curveto
+	   S, s = smooth curveto
+	   Q, q = quadratic Bézier curve
+	   T, t = smooth quadratic Bézier curveto
+	   A, a = elliptical Arc
+	   Z, z = closepath
 	*/
 	Typ string // M, m, L, l, H, h, V, v, C, c, S, s, Q, q, T, t, A, a
 	xy  []int
@@ -43,6 +43,7 @@ type PATH struct {
 	isClose bool
 }
 
+// Constructor
 func Path(s ...style.STYLE) PATH {
 	return PATH{
 		st:    mstyle(s...),
