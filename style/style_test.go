@@ -43,16 +43,16 @@ func (s STYLETestsSuite) Test_Stroke(c *C) {
 	c.Assert(l1.Stroke(12, 34, 45).Source(), Equals, "style=\"stroke:rgb(12,34,45)\"")
 }
 
+func (s STYLETestsSuite) Test_FillRGB(c *C) {
+	//c.Skip("Not now")
+
+	l1 := Style()
+	c.Assert(l1.FillRGB(12, 34, 45).Source(), Equals, "style=\"fill:rgb(12,34,45)\"")
+}
+
 func (s STYLETestsSuite) Test_Fill(c *C) {
 	//c.Skip("Not now")
 
 	l1 := Style()
-	c.Assert(l1.Fill(12, 34, 45).Source(), Equals, "style=\"fill:rgb(12,34,45)\"")
-}
-
-func (s STYLETestsSuite) Test_FillStr(c *C) {
-	//c.Skip("Not now")
-
-	l1 := Style()
-	c.Assert(l1.FillStr("black").Source(), Equals, "style=\"fill:black\"")
+	c.Assert(l1.Fill("black").Source(), Equals, "style=\"fill:black\"")
 }

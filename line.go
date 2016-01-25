@@ -28,11 +28,13 @@ func Line(x1, y1, x2, y2 int, s ...style.STYLE) LINE {
 	}
 }
 
+// Setter
 func (line LINE) Style(s style.STYLE) Node {
 	line.st = s
 	return line
 }
 
+// Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
 func (line LINE) Append(n ...Node) LINE {
 	if len(n) > 0 {
 		line.inner = append(line.inner, n...)
@@ -40,10 +42,12 @@ func (line LINE) Append(n ...Node) LINE {
 	return line
 }
 
+// Inner() returns inner elements of LINE
 func (line LINE) Inner() []Node {
 	return line.inner
 }
 
+// Source() returns svg implementation of LINE element
 func (line LINE) Source() string {
 	body := fmt.Sprintf(lineTag, line.x1, line.y1, line.x2, line.y2, line.st.Source())
 	return _Source(body, lineEndTag, line.inner)

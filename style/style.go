@@ -24,6 +24,7 @@ func Style() STYLE {
 	}
 }
 
+// Source() returns svg implementation of STYLE element
 func (style STYLE) Source() string {
 
 	if len(style.tags) == 0 {
@@ -53,12 +54,12 @@ func (style STYLE) StrokeStr(c string) STYLE {
 	return style
 }
 
-func (style STYLE) Fill(r, g, b int) STYLE {
+func (style STYLE) FillRGB(r, g, b int) STYLE {
 	style.tags[`fill`] = Color(r, g, b)
 	return style
 }
 
-func (style STYLE) FillStr(c string) STYLE {
+func (style STYLE) Fill(c string) STYLE {
 	style.tags[`fill`] = ColorStr(c)
 	return style
 }

@@ -32,11 +32,13 @@ func Rect(x, y, width, height int, s ...style.STYLE) RECT {
 	}
 }
 
+// Setter
 func (rect RECT) Style(s style.STYLE) Node {
 	rect.st = s
 	return rect
 }
 
+// Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
 func (rect RECT) Append(n ...Node) RECT {
 	if len(n) > 0 {
 		rect.inner = append(rect.inner, n...)
@@ -44,10 +46,12 @@ func (rect RECT) Append(n ...Node) RECT {
 	return rect
 }
 
+// Inner() returns inner elements of RECT
 func (rect RECT) Inner() []Node {
 	return rect.inner
 }
 
+// Source() returns svg implementation of RECT element
 func (rect RECT) Source() string {
 	body := fmt.Sprintf(rectTag, rect.x, rect.y, rect.width, rect.height, rect.st.Source())
 	return _Source(body, rectEndTag, rect.inner)

@@ -21,14 +21,20 @@ func Title(text string) TITLE {
 	}
 }
 
+// Setter
 func (title TITLE) Style(s style.STYLE) Node {
 	return title
 }
 
+/*
+	Inner() returns inner elements of TITLE.
+	For TITLE it is always empty list
+*/
 func (title TITLE) Inner() []Node {
 	return []Node{}
 }
 
+// Source() returns svg implementation of TITLE element
 func (title TITLE) Source() string {
 	return title.body
 }

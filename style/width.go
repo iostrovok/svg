@@ -21,6 +21,7 @@ func Width(value float64) WIDTH {
 	}
 }
 
+// Source() returns svg implementation of WIDTH style
 func (width WIDTH) Source() string {
 	if math.Floor(width.value) == width.value {
 		return fmt.Sprintf(lineWidthInt, int(width.value))
