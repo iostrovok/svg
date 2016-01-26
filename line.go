@@ -7,11 +7,10 @@ import (
 )
 
 type LINE struct {
-	Node
+	INode
+	*Node
 	x1, x2 int
 	y1, y2 int
-	st     style.STYLE
-	inner  []Node
 }
 
 const (
@@ -20,36 +19,33 @@ const (
 )
 
 // Constructor
-func Line(x1, y1, x2, y2 int, s ...style.STYLE) LINE {
-	return LINE{
-		x1: x1, x2: x2,
+func Line(x1, y1, x2, y2 int, s ...style.STYLE) *LINE {
+	return &LINE{
+		Node: NewNode(s...),
+		x1:   x1, x2: x2,
 		y1: y1, y2: y2,
-		st:    mstyle(s...),
-		inner: []Node{},
 	}
-}
-
-// Setter
-func (line LINE) Style(s style.STYLE) Node {
-	line.st = s
-	return line
 }
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
-func (line LINE) Append(n ...Node) LINE {
-	if len(n) > 0 {
-		line.inner = append(line.inner, n...)
-	}
+func (line *LINE) Append(nodes ...INode) *LINE {
+	line.Node.Append(nodes...)
 	return line
 }
 
-// Inner() returns inner elements of LINE
-func (line LINE) Inner() []Node {
-	return line.inner
+func (line *LINE) AppendTo(n INode) *LINE {
+	n.AppendIn(line)
+	return line
+}
+
+// Setter
+func (line *LINE) Style(st style.STYLE) *LINE {
+	line.Node.Style(st)
+	return line
 }
 
 // Source() returns svg implementation of LINE element
-func (line LINE) Source() string {
-	body := fmt.Sprintf(lineTag, line.x1, line.y1, line.x2, line.y2, line.st.Source())
-	return _Source(body, lineEndTag, line.inner)
+func (line *LINE) Source() string {
+	body := fmt.Sprintf(lineTag, line.x1, line.y1, line.x2, line.y2, line.Node.st.Source())
+	return _Source(body, lineEndTag, line.Node.inner)
 }

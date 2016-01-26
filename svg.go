@@ -9,18 +9,12 @@ import (
 	"github.com/iostrovok/svg/style"
 )
 
-type Node interface {
-	Inner() []Node
-	Source() string
-	Style(style.STYLE) Node
-}
-
 // SVG defines the location of the generated SVG
 type SVG struct {
-	Node
-	w, h  int
-	body  string
-	inner []Node
+	INode
+	*Node
+	w, h int
+	body string
 }
 
 var (
@@ -40,10 +34,10 @@ var (
 // New is the SVG constructor
 func New(width, height int) *SVG {
 	return &SVG{
-		w:     width,
-		h:     height,
-		body:  fmt.Sprintf(svgTop, width, height),
-		inner: []Node{},
+		Node: NewNode(),
+		w:    width,
+		h:    height,
+		body: fmt.Sprintf(svgTop, width, height),
 	}
 }
 
@@ -63,58 +57,60 @@ func (svg *SVG) Height(height ...int) int {
 	return svg.h
 }
 
-// Inner() returns inner elements of SVG
-func (svg *SVG) Inner() []Node {
-	return svg.inner
-}
-
-// Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
-func (svg *SVG) Append(n Node) *SVG {
-	svg.inner = append(svg.inner, n)
-	return svg
-}
-
 // Source() returns svg implementation of SVG element
 func (svg *SVG) Source() string {
 	return _Source(svg.body, svgEnd, svg.inner)
 }
 
-func _Source(body, tagEnd string, inner []Node) string {
+func _Source(body, tagEnd string, inner []INode) string {
 
 	if len(inner) == 0 {
 		return body + emptyclose
 	}
 
-	out := body + ">\n"
-	for _, n := range inner {
-		out += n.Source() + br
-	}
-
-	return out + tagEnd + br
+	return body + ">\n" + _innerSource(inner) + tagEnd + br
 }
 
-func mstyle(s ...style.STYLE) style.STYLE {
-	if len(s) == 0 {
-		return style.STYLE{}
+// Source() returns svg implementation of SVG element
+func (svg *SVG) InnerSource() string {
+	return _innerSource(svg.inner)
+}
+
+func _innerSource(inner []INode) string {
+
+	out := ""
+	for _, n := range inner {
+		out += n.Source()
 	}
-	return s[0]
+
+	return out
 }
 
 // Save() saves content of SVG to io.Writer
 func (svg *SVG) Save(Writer io.Writer) error {
-
 	src := []byte(svg.Source())
 	_, err := io.Copy(Writer, bytes.NewReader(src))
 	return err
 }
 
+// // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
+func (svg *SVG) Append(n INode) *SVG {
+	svg.Node.inner = append(svg.Node.inner, n)
+	return svg
+}
+
+func (svg *SVG) AppendIn(n INode) {
+	svg.Node.Append(n)
+}
+
 // Rect() adds rect element to SVG
-func (svg *SVG) Rect(x1, y1, width, height int, style ...style.STYLE) *SVG {
-	return svg.Append(Rect(x1, y1, width, height, style...))
+func (svg *SVG) Rect(x1, y1, width, height int, st ...style.STYLE) *SVG {
+	r := Rect(x1, y1, width, height, st...)
+	return svg.Append(r)
 }
 
 // Line() adds line element to SVG
-func (svg *SVG) Line(x1, y1, x2, y2 int, style ...style.STYLE) *SVG {
-	n := Line(x1, y1, x2, y2, style...)
+func (svg *SVG) Line(x1, y1, x2, y2 int, st ...style.STYLE) *SVG {
+	n := Line(x1, y1, x2, y2, st...)
 	return svg.Append(n)
 }

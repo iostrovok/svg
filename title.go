@@ -2,12 +2,11 @@ package svg
 
 import (
 	"fmt"
-
-	"github.com/iostrovok/svg/style"
 )
 
 type TITLE struct {
-	Node
+	INode
+	*Node
 	body string
 }
 
@@ -16,26 +15,14 @@ const (
 )
 
 // Constructor
-func Title(text string) TITLE {
-	return TITLE{
+func Title(text string) *TITLE {
+	return &TITLE{
+		Node: NewNode(),
 		body: fmt.Sprintf(titleTag, text),
 	}
 }
 
-// Setter
-func (title TITLE) Style(s style.STYLE) Node {
-	return title
-}
-
-/*
-	Inner() returns inner elements of TITLE.
-	For TITLE it is always empty list
-*/
-func (title TITLE) Inner() []Node {
-	return []Node{}
-}
-
 // Source() returns svg implementation of TITLE element
-func (title TITLE) Source() string {
+func (title *TITLE) Source() string {
 	return title.body
 }

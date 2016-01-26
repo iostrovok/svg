@@ -36,43 +36,40 @@ type pathPart struct {
 }
 
 type PATH struct {
-	Node
-	st      style.STYLE
-	inner   []Node
+	INode
+	*Node
 	parts   []*pathPart
 	isClose bool
 }
 
 // Constructor
-func Path(s ...style.STYLE) PATH {
-	return PATH{
-		st:    mstyle(s...),
-		inner: []Node{},
+func Path(s ...style.STYLE) *PATH {
+	p := &PATH{
+		Node:  NewNode(s...),
 		parts: []*pathPart{},
 	}
+	return p
 }
 
-// Setter
-func (path PATH) Style(s style.STYLE) Node {
-	path.st = s
+func (path *PATH) AppendTo(n INode) *PATH {
+	n.AppendIn(path)
 	return path
 }
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
-func (path PATH) Append(n ...Node) PATH {
-	if len(n) > 0 {
-		path.inner = append(path.inner, n...)
-	}
+func (path *PATH) Append(nodes ...INode) *PATH {
+	path.Node.Append(nodes...)
 	return path
 }
 
-// Inner() returns inner elements of PATH
-func (path PATH) Inner() []Node {
-	return path.inner
+// Setter
+func (path *PATH) Style(st style.STYLE) *PATH {
+	path.Node.Style(st)
+	return path
 }
 
-// Source() returns svg implementation of PATH element
-func (path PATH) Source() string {
+// Source() returns svg implementation of *PATH element
+func (path *PATH) Source() string {
 
 	body := []string{}
 	var last *pathPart
@@ -121,7 +118,7 @@ func (p *pathPart) drawPart() string {
 }
 
 // Z = closepath
-func (path PATH) Z(is ...bool) PATH {
+func (path *PATH) Z(is ...bool) *PATH {
 	if len(is) > 0 {
 		path.isClose = is[0]
 	} else {
@@ -131,11 +128,11 @@ func (path PATH) Z(is ...bool) PATH {
 }
 
 // AddPart
-func (path PATH) AddPart(t string, x ...int) PATH {
+func (path *PATH) AddPart(t string, x ...int) *PATH {
 
 	// Checks true creating path
 	if len(path.parts) == 0 && t != "M" && t != "m" {
-		panic(`For PATH the first element must be "M" or "m". See https://www.w3.org/TR/SVG/paths.html`)
+		panic(`For *PATH the first element must be "M" or "m". See https://www.w3.org/TR/SVG/paths.html`)
 	}
 
 	path.parts = append(path.parts, &pathPart{
@@ -146,92 +143,92 @@ func (path PATH) AddPart(t string, x ...int) PATH {
 }
 
 // M (absolute) moveto
-func (path PATH) M(x, y int) PATH {
+func (path *PATH) M(x, y int) *PATH {
 	return path.AddPart("M", x, y)
 }
 
 // m (relative) moveto
-func (path PATH) m(x, y int) PATH {
+func (path *PATH) m(x, y int) *PATH {
 	return path.AddPart("m", x, y)
 }
 
 // L (absolute) lineto
-func (path PATH) L(x, y int) PATH {
+func (path *PATH) L(x, y int) *PATH {
 	return path.AddPart("L", x, y)
 }
 
 // l (relative) lineto
-func (path PATH) l(x, y int) PATH {
+func (path *PATH) l(x, y int) *PATH {
 	return path.AddPart("l", x, y)
 }
 
 // H (absolute) horizontal linetov
-func (path PATH) H(x int) PATH {
+func (path *PATH) H(x int) *PATH {
 	return path.AddPart("H", x)
 }
 
 // h (relative) horizontal linetov
-func (path PATH) h(x int) PATH {
+func (path *PATH) h(x int) *PATH {
 	return path.AddPart("h", x)
 }
 
 // V (absolute) vertical lineto
-func (path PATH) V(y int) PATH {
+func (path *PATH) V(y int) *PATH {
 	return path.AddPart("V", y)
 }
 
 // v (relative) vertical lineto
-func (path PATH) v(y int) PATH {
+func (path *PATH) v(y int) *PATH {
 	return path.AddPart("v", y)
 }
 
 // Q  (absolute)  quadratic Bézier curve
-func (path PATH) Q(x1, y1, x2, y2 int) PATH {
+func (path *PATH) Q(x1, y1, x2, y2 int) *PATH {
 	return path.AddPart("Q", x1, y1, x2, y2)
 }
 
 // q  (relative) quadratic Bézier curve
-func (path PATH) q(x1, y1, x2, y2 int) PATH {
+func (path *PATH) q(x1, y1, x2, y2 int) *PATH {
 	return path.AddPart("q", x1, y1, x2, y2)
 }
 
 // T (absolute)  smooth quadratic Bézier curveto
-func (path PATH) T(x1, y1 int) PATH {
+func (path *PATH) T(x1, y1 int) *PATH {
 	return path.AddPart("T", x1, y1)
 }
 
 // t (relative)  smooth quadratic Bézier curveto
-func (path PATH) t(x1, y1 int) PATH {
+func (path *PATH) t(x1, y1 int) *PATH {
 	return path.AddPart("t", x1, y1)
 }
 
 // A (absolute) elliptical Arc
 // a25,100 -30 1,0 50,-25
-func (path PATH) A(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y int) PATH {
+func (path *PATH) A(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y int) *PATH {
 	return path.AddPart("A", rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y)
 }
 
 // a (relative) elliptical Arc
-func (path PATH) a(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y int) PATH {
+func (path *PATH) a(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y int) *PATH {
 	return path.AddPart("a", rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y)
 }
 
 // C (absolute) curveto
-func (path PATH) C(x1, y1, x2, y2, x, y int) PATH {
+func (path *PATH) C(x1, y1, x2, y2, x, y int) *PATH {
 	return path.AddPart("C", x1, y1, x2, y2, x, y)
 }
 
 // c (relative) curveto
-func (path PATH) c(x1, y1, x2, y2, x, y int) PATH {
+func (path *PATH) c(x1, y1, x2, y2, x, y int) *PATH {
 	return path.AddPart("c", x1, y1, x2, y2, x, y)
 }
 
 // S (absolute) shorthand/smooth curveto
-func (path PATH) S(x2, y2, x, y int) PATH {
+func (path *PATH) S(x2, y2, x, y int) *PATH {
 	return path.AddPart("S", x2, y2, x, y)
 }
 
 // s (relative) shorthand/smooth curveto
-func (path PATH) s(x2, y2, x, y int) PATH {
+func (path *PATH) s(x2, y2, x, y int) *PATH {
 	return path.AddPart("s", x2, y2, x, y)
 }

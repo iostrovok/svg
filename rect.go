@@ -7,12 +7,11 @@ import (
 )
 
 type RECT struct {
-	Node
+	INode
+	*Node
 	x, y   int
 	width  int
 	height int
-	inner  []Node
-	st     style.STYLE
 }
 
 const (
@@ -21,38 +20,35 @@ const (
 )
 
 // Constructor
-func Rect(x, y, width, height int, s ...style.STYLE) RECT {
-	return RECT{
+func Rect(x, y, width, height int, s ...style.STYLE) *RECT {
+	return &RECT{
+		Node:   NewNode(s...),
 		x:      x,
 		y:      y,
 		width:  width,
 		height: height,
-		st:     mstyle(s...),
-		inner:  []Node{},
 	}
 }
 
-// Setter
-func (rect RECT) Style(s style.STYLE) Node {
-	rect.st = s
+func (rect *RECT) AppendTo(n INode) *RECT {
+	n.AppendIn(rect)
 	return rect
 }
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
-func (rect RECT) Append(n ...Node) RECT {
-	if len(n) > 0 {
-		rect.inner = append(rect.inner, n...)
-	}
+func (rect *RECT) Append(nodes ...INode) *RECT {
+	rect.Node.Append(nodes...)
 	return rect
 }
 
-// Inner() returns inner elements of RECT
-func (rect RECT) Inner() []Node {
-	return rect.inner
+// Setter
+func (rect *RECT) Style(st style.STYLE) *RECT {
+	rect.Node.Style(st)
+	return rect
 }
 
 // Source() returns svg implementation of RECT element
-func (rect RECT) Source() string {
+func (rect *RECT) Source() string {
 	body := fmt.Sprintf(rectTag, rect.x, rect.y, rect.width, rect.height, rect.st.Source())
 	return _Source(body, rectEndTag, rect.inner)
 }
