@@ -15,13 +15,17 @@ type SVG struct {
 	*Node
 	w, h int
 	body string
+
+	// viewBox
+	vx, vy int
+	vw, vh int
 }
 
 var (
 	svgTop = `<?xml version="1.0"?>
-<svg 
-	width="%d" height="%d"
-	xmlns="http://www.w3.org/2000/svg" 
+<svg
+	width="%d" height="%d" %s
+	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 `
 	svgEnd     = `</svg>`
@@ -37,7 +41,6 @@ func New(width, height int) *SVG {
 		Node: NewNode(),
 		w:    width,
 		h:    height,
-		body: fmt.Sprintf(svgTop, width, height),
 	}
 }
 
@@ -57,9 +60,25 @@ func (svg *SVG) Height(height ...int) int {
 	return svg.h
 }
 
+// ViewBox(x, y, width, height) set the viewBox attribute
+func (svg *SVG) ViewBox(x, y, width, height int) *SVG {
+	svg.vx = x
+	svg.vy = y
+	svg.vw = width
+	svg.vh = height
+
+	return svg
+}
+
 // Source() returns svg implementation of SVG element
 func (svg *SVG) Source() string {
-	return _Source(svg.body, svgEnd, svg.inner)
+	vb := ""
+	if svg.vx != 0 || svg.vy != 0 || svg.vw != 0 || svg.vh != 0 {
+		vb = fmt.Sprintf(vbfmt, svg.vx, svg.vy, svg.vw, svg.vh)
+	}
+	body := fmt.Sprintf(svgTop, svg.w, svg.h, vb)
+
+	return _Source(body, svgEnd, svg.inner)
 }
 
 func _Source(body, tagEnd string, inner []INode) string {
