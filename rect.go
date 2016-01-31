@@ -51,4 +51,5 @@ func (rect *RECT) Style(st style.STYLE) *RECT {
 func (rect *RECT) Source() string {
 	body := fmt.Sprintf(rectTag, rect.x, rect.y, rect.width, rect.height, rect.st.Source())
 	return _Source(body, rectEndTag, rect.inner)
+
 }

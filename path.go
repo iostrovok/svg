@@ -7,6 +7,17 @@ import (
 	"github.com/iostrovok/svg/style"
 )
 
+/*
+	https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d
+
+	"A", "a":
+	The declaration of an arcto is relatively complicated: "A rx,ry xAxisRotate LargeArcFlag,SweepFlag x,y".
+	To deconstruct, rx and ry are the radius in the x and y directions respectively,
+	The LargeArcFlag has a value of either 0 or 1, and determines whether the smallest (0) or largest (1) arc possible is drawn. T
+	he SweepFlag is either 0 or 1, and determines if the arc should be swept in a clockwise (1) or anti-clockwise (0) direction.
+	x and y are the destination coordinates.
+*/
+
 const (
 	formatPoint         = "%d,%d"
 	formatPartOneX      = "%d"
@@ -38,8 +49,7 @@ type pathPart struct {
 type PATH struct {
 	INode
 	*Node
-	parts   []*pathPart
-	isClose bool
+	parts []*pathPart
 }
 
 // Constructor
@@ -74,10 +84,15 @@ func (path *PATH) Source() string {
 	body := []string{}
 	var last *pathPart
 	for _, p := range path.parts {
+		leadSymbol := false
+
+		if p.Typ == "Z" || p.Typ == "z" {
+			body = append(body, p.Typ)
+			last = p
+			continue
+		}
 
 		s := p.drawPart()
-
-		leadSymbol := false
 		if p.Typ == "V" || p.Typ == "v" || p.Typ == "H" || p.Typ == "h" {
 			leadSymbol = true
 		} else if (last != nil && last.Typ != p.Typ) || (last == nil) {
@@ -90,10 +105,6 @@ func (path *PATH) Source() string {
 
 		body = append(body, s)
 		last = p
-	}
-
-	if path.isClose {
-		body = append(body, "Z")
 	}
 
 	bodyLine := fmt.Sprintf(pathTag, strings.Join(body, " "), path.st.Source())
@@ -118,12 +129,17 @@ func (p *pathPart) drawPart() string {
 }
 
 // Z = closepath
-func (path *PATH) Z(is ...bool) *PATH {
-	if len(is) > 0 {
-		path.isClose = is[0]
-	} else {
-		path.isClose = true
-	}
+func (path *PATH) Z() *PATH {
+	path.parts = append(path.parts, &pathPart{
+		Typ: "Z",
+	})
+	return path
+}
+
+func (path *PATH) z() *PATH {
+	path.parts = append(path.parts, &pathPart{
+		Typ: "z",
+	})
 	return path
 }
 
