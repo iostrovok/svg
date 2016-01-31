@@ -3,6 +3,8 @@ package svg
 import (
 	. "gopkg.in/check.v1"
 	"testing"
+
+	"fmt"
 )
 
 func TestSVG(t *testing.T) {
@@ -31,6 +33,32 @@ func (s SVGTestsSuite) Test_SVG_Source(c *C) {
 	m := New(100, 100)
 	t := len(m.Source()) > 10
 	c.Assert(t, Equals, true)
+}
+
+func (s SVGTestsSuite) Test_SVG_ViewBox(c *C) {
+	//c.Skip("Not now")
+
+	m := New(100, 100).ViewBox(0, 0, 200, 300)
+
+	c.Assert(m.Height(), Equals, 100)
+	m.Height(200)
+	c.Assert(m.Height(), Equals, 200)
+
+	c.Assert(m.Width(), Equals, 100)
+	m.Width(600)
+	c.Assert(m.Width(), Equals, 600)
+
+	fmt.Printf("\n\n---------------------------\n\n%s\n\n--------------------------------\n", m.Source())
+
+	line := `<?xml version="1.0"?>
+<svg
+	width="600" height="200" viewBox="0 0 200 300"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+/>
+`
+
+	c.Assert(m.Source(), Equals, line)
 }
 
 func (s SVGTestsSuite) Test_AppendTo_Line(c *C) {
