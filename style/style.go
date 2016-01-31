@@ -14,6 +14,7 @@ type ONESTYLE interface {
 }
 
 type STYLE struct {
+	font *ONESTYLE
 	tags map[string]ONESTYLE
 }
 
@@ -27,16 +28,27 @@ func Style() STYLE {
 // Source() returns svg implementation of STYLE element
 func (style STYLE) Source() string {
 
-	if len(style.tags) == 0 {
+	if len(style.tags) == 0 && style.font == nil {
 		return ""
 	}
 
 	out := []string{}
+	if style.font != nil {
+		f := *style.font
+		out = append(out, f.Source())
+	}
+
 	for k, v := range style.tags {
 		// out = append(out, k+Eq+url.QueryEscape(v.Source()))
 		out = append(out, k+Eq+v.Source())
 	}
 	return `style="` + strings.Join(out, Del) + `"`
+}
+
+// Constructor
+func (style STYLE) Font(font ONESTYLE) STYLE {
+	style.font = &font
+	return style
 }
 
 func (style STYLE) StrokeWidth(width float64) STYLE {

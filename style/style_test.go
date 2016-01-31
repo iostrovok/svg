@@ -63,3 +63,11 @@ func (s STYLETestsSuite) Test_Fill(c *C) {
 	st := Style()
 	c.Assert(st.Fill("black").Source(), Equals, "style=\"fill:black\"")
 }
+
+func (s STYLETestsSuite) Test_Font(c *C) {
+	//c.Skip("Not now")
+
+	st := Style()
+	f := Font("---")
+	c.Assert(st.Font(f).Source(), Equals, "style=\"---\"")
+}
