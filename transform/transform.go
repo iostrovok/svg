@@ -66,12 +66,12 @@ func (trans TRANSFORM) Scale(sx float64, sy ...float64) TRANSFORM {
 	return trans
 }
 
-// func (trans TRANSFORM) Rotate(angle float64, xy ...float64) TRANSFORM {
-// 	trans.tags = append(trans.tags, Rotate(angle, xy ...))
-// 	return trans
-// }
+func (trans TRANSFORM) Translate(sx float64, sy ...float64) TRANSFORM {
+	trans.tags = append(trans.tags, Translate(sx, sy...))
+	return trans
+}
 
-// func (trans TRANSFORM) Translate(sx float64, sy ...float64) TRANSFORM {
-// 	trans.tags = append(trans.tags, Translate(sx, sy...))
-// 	return trans
-// }
+func (trans TRANSFORM) Rotate(angle float64, xy ...float64) TRANSFORM {
+	trans.tags = append(trans.tags, Rotate(angle, xy...))
+	return trans
+}
