@@ -4,20 +4,20 @@ import (
 	"github.com/iostrovok/svg/style"
 )
 
-type INode interface {
+type iNode interface {
 	Source() string
-	AppendIn(INode)
+	AppendIn(iNode)
 }
 
-type Node struct {
-	INode
+type node struct {
+	iNode
 	st    style.STYLE
-	inner []INode
+	inner []iNode
 }
 
-func NewNode(s ...style.STYLE) *Node {
-	return &Node{
-		inner: []INode{},
+func newNode(s ...style.STYLE) *node {
+	return &node{
+		inner: []iNode{},
 		st:    mstyle(s...),
 	}
 }
@@ -29,12 +29,12 @@ func mstyle(s ...style.STYLE) style.STYLE {
 	return s[0]
 }
 
-// Setter
-func (n *Node) Style(s style.STYLE) {
-	n.st = s
+// Style sets the "style.STYLE" object
+func (n *node) Style(st style.STYLE) {
+	n.st = st
 }
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
-func (n *Node) Append(in ...INode) {
+func (n *node) Append(in ...iNode) {
 	n.inner = append(n.inner, in...)
 }

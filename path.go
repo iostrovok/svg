@@ -47,34 +47,35 @@ type pathPart struct {
 }
 
 type PATH struct {
-	INode
-	*Node
+	iNode
+	*node
 	parts []*pathPart
 }
 
 // Constructor
 func Path(s ...style.STYLE) *PATH {
 	p := &PATH{
-		Node:  NewNode(s...),
+		node:  newNode(s...),
 		parts: []*pathPart{},
 	}
 	return p
 }
 
-func (path *PATH) AppendTo(n INode) *PATH {
+// AppendTo is interface function
+func (path *PATH) AppendTo(n iNode) *PATH {
 	n.AppendIn(path)
 	return path
 }
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
-func (path *PATH) Append(nodes ...INode) *PATH {
-	path.Node.Append(nodes...)
+func (path *PATH) Append(nodes ...iNode) *PATH {
+	path.node.Append(nodes...)
 	return path
 }
 
-// Setter
+// Style sets the "style.STYLE" object
 func (path *PATH) Style(st style.STYLE) *PATH {
-	path.Node.Style(st)
+	path.node.Style(st)
 	return path
 }
 

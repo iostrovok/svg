@@ -7,8 +7,8 @@ import (
 )
 
 type RECT struct {
-	INode
-	*Node
+	iNode
+	*node
 	x, y   int
 	width  int
 	height int
@@ -22,7 +22,7 @@ const (
 // Constructor
 func Rect(x, y, width, height int, s ...style.STYLE) *RECT {
 	return &RECT{
-		Node:   NewNode(s...),
+		node:   newNode(s...),
 		x:      x,
 		y:      y,
 		width:  width,
@@ -30,20 +30,21 @@ func Rect(x, y, width, height int, s ...style.STYLE) *RECT {
 	}
 }
 
-func (rect *RECT) AppendTo(n INode) *RECT {
+// AppendTo is interface function
+func (rect *RECT) AppendTo(n iNode) *RECT {
 	n.AppendIn(rect)
 	return rect
 }
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
-func (rect *RECT) Append(nodes ...INode) *RECT {
-	rect.Node.Append(nodes...)
+func (rect *RECT) Append(nodes ...iNode) *RECT {
+	rect.node.Append(nodes...)
 	return rect
 }
 
-// Setter
+// Style sets the "style.STYLE" object
 func (rect *RECT) Style(st style.STYLE) *RECT {
-	rect.Node.Style(st)
+	rect.node.Style(st)
 	return rect
 }
 

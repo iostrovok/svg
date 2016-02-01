@@ -5,8 +5,8 @@ import (
 )
 
 type TITLE struct {
-	INode
-	*Node
+	iNode
+	*node
 	body string
 }
 
@@ -17,7 +17,7 @@ const (
 // Constructor
 func Title(text string) *TITLE {
 	return &TITLE{
-		Node: NewNode(),
+		node: newNode(),
 		body: fmt.Sprintf(titleTag, text),
 	}
 }

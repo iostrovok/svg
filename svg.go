@@ -11,9 +11,10 @@ import (
 
 // SVG defines the location of the generated SVG
 type SVG struct {
-	INode
-	*Node
+	iNode
+	*node
 	w, h int
+	dim  string
 	body string
 
 	// viewBox
@@ -24,24 +25,33 @@ type SVG struct {
 var (
 	svgTop = `<?xml version="1.0"?>
 <svg
-	width="%d" height="%d" %s
+	width="%d%s" height="%d%s" %s
 	xmlns="http://www.w3.org/2000/svg"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 `
 	svgEnd     = `</svg>`
-	svginitfmt = `%s width="%d%s" height="%d%s"`
 	vbfmt      = `viewBox="%d %d %d %d"`
 	emptyclose = "/>\n"
 	br         = "\n"
 )
 
-// New is the SVG constructor
-func New(width, height int) *SVG {
-	return &SVG{
-		Node: NewNode(),
+/*
+	New is the SVG constructor
+	example:
+	s := New(100, 100, "px")
+*/
+func New(width, height int, dim ...string) *SVG {
+	s := &SVG{
+		node: newNode(),
 		w:    width,
 		h:    height,
 	}
+
+	if len(dim) > 0 {
+		s.dim = dim[0]
+	}
+
+	return s
 }
 
 // Width(width ...int) set/get width of SVG element
@@ -60,6 +70,14 @@ func (svg *SVG) Height(height ...int) int {
 	return svg.h
 }
 
+// Dim(dim ...string) set/get dimension of SVG element
+func (svg *SVG) Dim(dim ...string) string {
+	if len(dim) > 0 {
+		svg.dim = dim[0]
+	}
+	return svg.dim
+}
+
 // ViewBox(x, y, width, height) set the viewBox attribute
 func (svg *SVG) ViewBox(x, y, width, height int) *SVG {
 	svg.vx = x
@@ -70,18 +88,27 @@ func (svg *SVG) ViewBox(x, y, width, height int) *SVG {
 	return svg
 }
 
+// GetViewBox() get the details of viewBox attribute
+func (svg *SVG) GetViewBox() (x, y, width, height int) {
+	x = svg.vx
+	y = svg.vy
+	width = svg.vw
+	height = svg.vh
+	return
+}
+
 // Source() returns svg implementation of SVG element
 func (svg *SVG) Source() string {
 	vb := ""
 	if svg.vx != 0 || svg.vy != 0 || svg.vw != 0 || svg.vh != 0 {
 		vb = fmt.Sprintf(vbfmt, svg.vx, svg.vy, svg.vw, svg.vh)
 	}
-	body := fmt.Sprintf(svgTop, svg.w, svg.h, vb)
+	body := fmt.Sprintf(svgTop, svg.w, svg.dim, svg.h, svg.dim, vb)
 
 	return _Source(body, svgEnd, svg.inner)
 }
 
-func _Source(body, tagEnd string, inner []INode) string {
+func _Source(body, tagEnd string, inner []iNode) string {
 
 	if len(inner) == 0 {
 		return body + emptyclose
@@ -95,7 +122,7 @@ func (svg *SVG) InnerSource() string {
 	return _innerSource(svg.inner)
 }
 
-func _innerSource(inner []INode) string {
+func _innerSource(inner []iNode) string {
 
 	out := ""
 	for _, n := range inner {
@@ -113,13 +140,13 @@ func (svg *SVG) Save(Writer io.Writer) error {
 }
 
 // // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
-func (svg *SVG) Append(n INode) *SVG {
-	svg.Node.inner = append(svg.Node.inner, n)
+func (svg *SVG) Append(n iNode) *SVG {
+	svg.node.inner = append(svg.node.inner, n)
 	return svg
 }
 
-func (svg *SVG) AppendIn(n INode) {
-	svg.Node.Append(n)
+func (svg *SVG) AppendIn(n iNode) {
+	svg.node.Append(n)
 }
 
 // Rect() adds rect element to SVG
