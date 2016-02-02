@@ -172,7 +172,7 @@ func (path *PATH) M(x, y int) *PATH {
 }
 
 // m (relative) moveto
-func (path *PATH) m(x, y int) *PATH {
+func (path *PATH) Mm(x, y int) *PATH {
 	return path.AddPart("m", x, y)
 }
 
@@ -182,7 +182,7 @@ func (path *PATH) L(x, y int) *PATH {
 }
 
 // l (relative) lineto
-func (path *PATH) l(x, y int) *PATH {
+func (path *PATH) Ll(x, y int) *PATH {
 	return path.AddPart("l", x, y)
 }
 
@@ -192,7 +192,7 @@ func (path *PATH) H(x int) *PATH {
 }
 
 // h (relative) horizontal linetov
-func (path *PATH) h(x int) *PATH {
+func (path *PATH) Hh(x int) *PATH {
 	return path.AddPart("h", x)
 }
 
@@ -202,7 +202,7 @@ func (path *PATH) V(y int) *PATH {
 }
 
 // v (relative) vertical lineto
-func (path *PATH) v(y int) *PATH {
+func (path *PATH) Vv(y int) *PATH {
 	return path.AddPart("v", y)
 }
 
@@ -212,7 +212,7 @@ func (path *PATH) Q(x1, y1, x2, y2 int) *PATH {
 }
 
 // q  (relative) quadratic Bézier curve
-func (path *PATH) q(x1, y1, x2, y2 int) *PATH {
+func (path *PATH) Qq(x1, y1, x2, y2 int) *PATH {
 	return path.AddPart("q", x1, y1, x2, y2)
 }
 
@@ -222,7 +222,7 @@ func (path *PATH) T(x1, y1 int) *PATH {
 }
 
 // t (relative)  smooth quadratic Bézier curveto
-func (path *PATH) t(x1, y1 int) *PATH {
+func (path *PATH) Tt(x1, y1 int) *PATH {
 	return path.AddPart("t", x1, y1)
 }
 
@@ -233,7 +233,7 @@ func (path *PATH) A(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y int) *P
 }
 
 // a (relative) elliptical Arc
-func (path *PATH) a(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y int) *PATH {
+func (path *PATH) Aa(rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y int) *PATH {
 	return path.AddPart("a", rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y)
 }
 
@@ -243,7 +243,7 @@ func (path *PATH) C(x1, y1, x2, y2, x, y int) *PATH {
 }
 
 // c (relative) curveto
-func (path *PATH) c(x1, y1, x2, y2, x, y int) *PATH {
+func (path *PATH) Cc(x1, y1, x2, y2, x, y int) *PATH {
 	return path.AddPart("c", x1, y1, x2, y2, x, y)
 }
 
@@ -253,6 +253,6 @@ func (path *PATH) S(x2, y2, x, y int) *PATH {
 }
 
 // s (relative) shorthand/smooth curveto
-func (path *PATH) s(x2, y2, x, y int) *PATH {
+func (path *PATH) Ss(x2, y2, x, y int) *PATH {
 	return path.AddPart("s", x2, y2, x, y)
 }

@@ -78,7 +78,7 @@ func (s SVGTestsSuite) Test_AppendTo_Rect(c *C) {
 func (s SVGTestsSuite) Test_AppendTo_Path(c *C) {
 	c.Skip("Not now")
 	m := New(100, 100)
-	Path().M(0, 0).V(100).v(200).H(300).h(400).AppendTo(m)
+	Path().M(0, 0).V(100).Vv(200).H(300).Hh(400).AppendTo(m)
 	c.Assert(m.InnerSource(), Equals, TestSVGWithPath)
 }
 
@@ -98,7 +98,7 @@ func (s SVGTestsSuite) Test_Append_Rect(c *C) {
 
 func (s SVGTestsSuite) Test_Append_Path(c *C) {
 	//c.Skip("Not now")
-	p := Path().M(0, 0).V(100).v(200).H(300).h(400)
+	p := Path().M(0, 0).V(100).Vv(200).H(300).Hh(400)
 	m := New(1000, 1000).Append(p)
 	c.Assert(m.InnerSource(), Equals, TestSVGWithPath)
 }
