@@ -64,7 +64,7 @@ func Path(s ...style.STYLE) *PATH {
 
 // AppendTo is interface function
 func (path *PATH) AppendTo(n iNode) *PATH {
-	n.AppendIn(path)
+	n.appendIn(path)
 	return path
 }
 

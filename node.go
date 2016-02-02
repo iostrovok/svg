@@ -9,7 +9,7 @@ import (
 
 type iNode interface {
 	Source() string
-	AppendIn(iNode)
+	appendIn(iNode)
 }
 
 type node struct {

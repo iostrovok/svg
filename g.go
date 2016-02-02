@@ -32,7 +32,7 @@ func (group *GROUP) Append(nodes ...iNode) *GROUP {
 
 // AppendTo is interface function
 func (group *GROUP) AppendTo(n iNode) *GROUP {
-	n.AppendIn(group)
+	n.appendIn(group)
 	return group
 }
 

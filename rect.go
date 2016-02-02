@@ -33,7 +33,7 @@ func Rect(x, y, width, height int, s ...style.STYLE) *RECT {
 
 // AppendTo is interface function
 func (rect *RECT) AppendTo(n iNode) *RECT {
-	n.AppendIn(rect)
+	n.appendIn(rect)
 	return rect
 }
 

@@ -91,7 +91,7 @@ func (text *TEXT) Append(nodes ...iNode) *TEXT {
 
 // AppendTo is interface function
 func (text *TEXT) AppendTo(n iNode) *TEXT {
-	n.AppendIn(text)
+	n.appendIn(text)
 	return text
 }
 

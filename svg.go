@@ -145,7 +145,7 @@ func (svg *SVG) Append(n iNode) *SVG {
 	return svg
 }
 
-func (svg *SVG) AppendIn(n iNode) {
+func (svg *SVG) appendIn(n iNode) {
 	svg.node.Append(n)
 }
 

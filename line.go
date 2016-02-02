@@ -37,7 +37,7 @@ func (line *LINE) Append(nodes ...iNode) *LINE {
 
 // AppendTo is interface function
 func (line *LINE) AppendTo(n iNode) *LINE {
-	n.AppendIn(line)
+	n.appendIn(line)
 	return line
 }
 
