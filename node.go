@@ -35,15 +35,24 @@ func newNode(st ...style.STYLE) *node {
 func (n *node) mSource() string {
 	out := []string{}
 
-	if st := n.st.Source(); st != "" {
+	if st := n.styleSource(); st != "" {
 		out = append(out, st)
 	}
 
-	if tr := n.tr.Source(); tr != "" {
+	if tr := n.transSource(); tr != "" {
 		out = append(out, tr)
 	}
 
 	return strings.Join(out, " ")
+}
+
+// Style sets the "style.STYLE" object
+func (n *node) styleSource() string {
+	return n.st.Source()
+}
+
+func (n *node) transSource() string {
+	return n.tr.Source()
 }
 
 // Style sets the "style.STYLE" object
