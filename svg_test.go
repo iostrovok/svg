@@ -82,6 +82,13 @@ func (s SVGTestsSuite) Test_AppendTo_Path(c *C) {
 	c.Assert(m.InnerSource(), Equals, TestSVGWithPath)
 }
 
+func (s SVGTestsSuite) Test_Append_Group(c *C) {
+	//c.Skip("Not now")
+	l := Line(10, 10, 20, 20)
+	m := New(100, 100).Append(l)
+	c.Assert(m.InnerSource(), Equals, TestSVGWithLine)
+}
+
 func (s SVGTestsSuite) Test_Append_Line(c *C) {
 	//c.Skip("Not now")
 	l := Line(10, 10, 20, 20)
