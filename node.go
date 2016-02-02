@@ -1,7 +1,10 @@
 package svg
 
 import (
+	"strings"
+
 	"github.com/iostrovok/svg/style"
+	"github.com/iostrovok/svg/transform"
 )
 
 type iNode interface {
@@ -12,26 +15,45 @@ type iNode interface {
 type node struct {
 	iNode
 	st    style.STYLE
+	tr    transform.TRANSFORM
 	inner []iNode
 }
 
-func newNode(s ...style.STYLE) *node {
-	return &node{
+func newNode(st ...style.STYLE) *node {
+	n := &node{
 		inner: []iNode{},
-		st:    mstyle(s...),
+		st:    style.STYLE{},
+		tr:    transform.TRANSFORM{},
 	}
+	if len(st) != 0 {
+		n.st = st[0]
+	}
+	return n
 }
 
-func mstyle(s ...style.STYLE) style.STYLE {
-	if len(s) == 0 {
-		return style.STYLE{}
+// Style sets the "style.STYLE" object
+func (n *node) mSource() string {
+	out := []string{}
+
+	if st := n.st.Source(); st != "" {
+		out = append(out, st)
 	}
-	return s[0]
+
+	if tr := n.tr.Source(); tr != "" {
+		out = append(out, tr)
+	}
+
+	return strings.Join(out, " ")
 }
 
 // Style sets the "style.STYLE" object
 func (n *node) Style(st style.STYLE) {
 	n.st = st
+}
+
+// Style sets the "style.STYLE" object
+func (n *node) Transform(tr transform.TRANSFORM) {
+	n.tr = tr
 }
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/iostrovok/svg/style"
+	"github.com/iostrovok/svg/transform"
 )
 
 func TestPATH(t *testing.T) {
@@ -116,4 +117,14 @@ func (s LINETestsSuite) Test_path_Style(c *C) {
 	st := style.Style().FillRGB(1, 2, 3)
 	p = p.Style(st).Append(Title("WWW"))
 	c.Assert(string(p.Source()), Equals, "<path d=\"M0,0 L100,200\" style=\"fill:rgb(1,2,3)\" >\n<title>WWW</title></line>\n")
+}
+
+func (s LINETestsSuite) Test_path_Transform(c *C) {
+	c.Skip("Not now")
+
+	p := Path()
+	p = p.M(0, 0).L(100, 200)
+	st := transform.Transform().Matrix(12, 34, 45, 34.5, 212, 4.45)
+	p = p.Transform(st).Append(Title("WWW"))
+	c.Assert(string(p.Source()), Equals, "<path d=\"M0,0 L100,200\" transform=\"matrix(12.00, 34.00, 45.00, 34.50, 212.00, 4.45)\" >\n<title>WWW</title></line>\n")
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/iostrovok/svg/style"
+	"github.com/iostrovok/svg/transform"
 )
 
 type LINE struct {
@@ -46,8 +47,14 @@ func (line *LINE) Style(st style.STYLE) *LINE {
 	return line
 }
 
+// Transform sets the "transform.TRANSFORM" object
+func (line *LINE) Transform(tr transform.TRANSFORM) *LINE {
+	line.node.Transform(tr)
+	return line
+}
+
 // Source() returns svg implementation of LINE element
 func (line *LINE) Source() string {
-	body := fmt.Sprintf(lineTag, line.x1, line.y1, line.x2, line.y2, line.node.st.Source())
+	body := fmt.Sprintf(lineTag, line.x1, line.y1, line.x2, line.y2, line.node.mSource())
 	return _Source(body, lineEndTag, line.node.inner)
 }

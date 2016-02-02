@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/iostrovok/svg/style"
+	"github.com/iostrovok/svg/transform"
 )
 
 func TestLINE(t *testing.T) {
@@ -49,4 +50,13 @@ func (s LINETestsSuite) Test_line_Style(c *C) {
 	st := style.Style().FillRGB(1, 2, 3)
 	l = l.Style(st).Append(Title("WWW"))
 	c.Assert(string(l.Source()), Equals, "<line x1=\"1\" y1=\"2\" x2=\"3\" y2=\"4\" style=\"fill:rgb(1,2,3)\" >\n<title>WWW</title></line>\n")
+}
+
+func (s LINETestsSuite) Test_line_Transform(c *C) {
+	//c.Skip("Not now")
+
+	l := Line(1, 2, 3, 4)
+	st := transform.Transform().Matrix(12, 34, 45, 34.5, 212, 4.45)
+	l = l.Transform(st).Append(Title("WWW"))
+	c.Assert(string(l.Source()), Equals, "<line x1=\"1\" y1=\"2\" x2=\"3\" y2=\"4\" transform=\"matrix(12.00, 34.00, 45.00, 34.50, 212.00, 4.45)\" >\n<title>WWW</title></line>\n")
 }

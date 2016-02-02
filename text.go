@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/iostrovok/svg/style"
+	"github.com/iostrovok/svg/transform"
 )
 
 const (
@@ -100,6 +101,12 @@ func (text *TEXT) Style(st style.STYLE) *TEXT {
 	return text
 }
 
+// Transform sets the "transform.TRANSFORM" object
+func (text *TEXT) Transform(tr transform.TRANSFORM) *TEXT {
+	text.node.Transform(tr)
+	return text
+}
+
 // Source() returns svg implementation of TEXT element
 func (text *TEXT) Source() string {
 	body := ""
@@ -107,12 +114,12 @@ func (text *TEXT) Source() string {
 	switch text.typ {
 	case isTRef:
 		end = trefEndTag
-		body = fmt.Sprintf(trefTag, text.href, text.node.st.Source())
+		body = fmt.Sprintf(trefTag, text.href, text.node.mSource())
 	case isTSpan:
 		end = tspanEndTag
-		body = fmt.Sprintf(tspanTag, text.href, text.node.st.Source())
+		body = fmt.Sprintf(tspanTag, text.href, text.node.mSource())
 	default:
-		body = fmt.Sprintf(textTag, text.node.st.Source())
+		body = fmt.Sprintf(textTag, text.node.mSource())
 		end = textEndTag
 	}
 

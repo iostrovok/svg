@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/iostrovok/svg/style"
+	"github.com/iostrovok/svg/transform"
 )
 
 func TestTEXT(t *testing.T) {
@@ -38,21 +39,18 @@ Hello, out there
 	c.Assert(string(res), Equals, check)
 }
 
-// func (s TEXTTestsSuite) Test_text_Append_Title(c *C) {
-// 	//c.Skip("Not now")
+func (s TEXTTestsSuite) Test_Transform(c *C) {
+	//c.Skip("Not now")
 
-// 	l := Text(1, 2, 3, 4)
-// 	t := Title("WWW")
-// 	l = l.Append(t)
-// 	res := l.Source()
-// 	c.Assert(string(res), Equals, "<text x1=\"1\" y1=\"2\" x2=\"3\" y2=\"4\"  >\n<title>WWW</title></text>\n")
-// }
-
-// func (s TEXTTestsSuite) Test_text_Style(c *C) {
-// 	//c.Skip("Not now")
-
-// 	l := Text(1, 2, 3, 4)
-// 	st := style.Style().FillRGB(1, 2, 3)
-// 	l = l.Style(st).Append(Title("WWW"))
-// 	c.Assert(string(l.Source()), Equals, "<text x1=\"1\" y1=\"2\" x2=\"3\" y2=\"4\" style=\"fill:rgb(1,2,3)\" >\n<title>WWW</title></text>\n")
-// }
+	check := `<text style="font-family:Verdana;font-size:55;fill:blue" transform="matrix(12.00, 34.00, 45.00, 34.50, 212.00, 4.45)" x="250" y="150">
+Hello, out there
+</text>
+`
+	f := style.Font("font-family:Verdana;font-size:55")
+	text := Text(style.Style().Fill("blue").Font(f))
+	text = text.XY(250, 150).String("Hello, out there\n")
+	tr := transform.Transform().Matrix(12, 34, 45, 34.5, 212, 4.45)
+	text = text.Transform(tr)
+	res := text.Source()
+	c.Assert(string(res), Equals, check)
+}

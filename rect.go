@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/iostrovok/svg/style"
+	"github.com/iostrovok/svg/transform"
 )
 
 type RECT struct {
@@ -45,6 +46,12 @@ func (rect *RECT) Append(nodes ...iNode) *RECT {
 // Style sets the "style.STYLE" object
 func (rect *RECT) Style(st style.STYLE) *RECT {
 	rect.node.Style(st)
+	return rect
+}
+
+// Transform sets the "transform.TRANSFORM" object
+func (rect *RECT) Transform(tr transform.TRANSFORM) *RECT {
+	rect.node.Transform(tr)
 	return rect
 }
 

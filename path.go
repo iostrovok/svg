@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/iostrovok/svg/style"
+	"github.com/iostrovok/svg/transform"
 )
 
 /*
@@ -79,6 +80,12 @@ func (path *PATH) Style(st style.STYLE) *PATH {
 	return path
 }
 
+// Transform sets the "transform.TRANSFORM" object
+func (path *PATH) Transform(tr transform.TRANSFORM) *PATH {
+	path.node.Transform(tr)
+	return path
+}
+
 // Source() returns svg implementation of *PATH element
 func (path *PATH) Source() string {
 
@@ -108,7 +115,7 @@ func (path *PATH) Source() string {
 		last = p
 	}
 
-	bodyLine := fmt.Sprintf(pathTag, strings.Join(body, " "), path.st.Source())
+	bodyLine := fmt.Sprintf(pathTag, strings.Join(body, " "), path.node.mSource())
 	return _Source(bodyLine, pathEndTag, path.inner)
 }
 
