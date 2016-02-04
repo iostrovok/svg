@@ -35,7 +35,7 @@ type textBody struct {
 }
 
 // Source() returns svg implementation of TEXT element
-func (text *textBody) Source() string {
+func (text textBody) Source() string {
 	return text.str
 }
 
@@ -158,6 +158,25 @@ func (text *TEXT) String(str string) *TEXT {
 	}
 
 	text.Append(t)
+	return text
+}
+
+// Style sets the content of text/tspan object
+func (text *TEXT) AddString(str string) *TEXT {
+
+	last := len(text.node.inner)
+
+	if last == 0 {
+		return text.String(str)
+	}
+
+	switch v := text.node.inner[last-1].(type) {
+	case textBody:
+		v.str += str
+	default:
+		text.String(str)
+	}
+
 	return text
 }
 
