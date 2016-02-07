@@ -35,7 +35,7 @@ func (s LINETestsSuite) Test_line2(c *C) {
 	c.Assert(cSL(res), Equals, obtained)
 }
 
-func (s LINETestsSuite) Test_line_Append_Title(c *C) {
+func (s LINETestsSuite) Test_Append_Title(c *C) {
 	//c.Skip("Not now")
 
 	obtained := cSL(`<line x1="1" y1="2" x2="3" y2="4"  ><title>WWW</title></line>`)
@@ -47,7 +47,7 @@ func (s LINETestsSuite) Test_line_Append_Title(c *C) {
 	c.Assert(cSL(res), Equals, obtained)
 }
 
-func (s LINETestsSuite) Test_line_Style(c *C) {
+func (s LINETestsSuite) Test_Style(c *C) {
 	//c.Skip("Not now")
 
 	obtained := cSL(`<line x1="1" y1="2" x2="3" y2="4" style="fill:rgb(1,2,3)" ><title>WWW</title></line>`)
@@ -58,7 +58,7 @@ func (s LINETestsSuite) Test_line_Style(c *C) {
 	c.Assert(cSL(l.Source()), Equals, obtained)
 }
 
-func (s LINETestsSuite) Test_line_Transform(c *C) {
+func (s LINETestsSuite) Test_Transform(c *C) {
 	//c.Skip("Not now")
 
 	obtained := cSL(`<line x1="1" y1="2" x2="3" y2="4" transform="matrix(12.00, 34.00, 45.00, 34.50, 212.00, 4.45)" ><title>WWW</title></line>`)
@@ -67,4 +67,18 @@ func (s LINETestsSuite) Test_line_Transform(c *C) {
 	st := transform.Transform().Matrix(12, 34, 45, 34.5, 212, 4.45)
 	l = l.Transform(st).Append(Title("WWW"))
 	c.Assert(cSL(l.Source()), Equals, obtained)
+}
+
+func (s LINETestsSuite) Test_ID(c *C) {
+	//c.Skip("Not now")
+
+	check := cSL(`<line x1="1" y1="2" x2="3" y2="4" id="id-1"/>`)
+
+	t := Line(1, 2, 3, 4)
+	t = t.ID("id-1")
+
+	c.Assert("id-1", Equals, t.GetID())
+
+	res := t.Source()
+	c.Assert(cSL(res), Equals, check)
 }

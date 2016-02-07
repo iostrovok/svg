@@ -105,7 +105,7 @@ func (s PATHTestsSuite) Test_path_Cc(c *C) {
 	c.Assert(cSL(p.Source()), Equals, obtained)
 }
 
-func (s LINETestsSuite) Test_path_Append_Title(c *C) {
+func (s PATHTestsSuite) Test_Append_Title(c *C) {
 	//c.Skip("Not now")
 
 	p := Path(style.Style().StrokeRGB(10, 20, 30))
@@ -118,7 +118,7 @@ func (s LINETestsSuite) Test_path_Append_Title(c *C) {
 	c.Assert(cSL(p.Source()), Equals, obtained)
 }
 
-func (s LINETestsSuite) Test_path_Style(c *C) {
+func (s PATHTestsSuite) Test_path_Style(c *C) {
 	// c.Skip("Not now")
 
 	p := Path(style.Style().StrokeRGB(10, 20, 30))
@@ -131,7 +131,7 @@ func (s LINETestsSuite) Test_path_Style(c *C) {
 	c.Assert(cSL(p.Source()), Equals, obtained)
 }
 
-func (s LINETestsSuite) Test_path_Transform(c *C) {
+func (s PATHTestsSuite) Test_Transform(c *C) {
 	// c.Skip("Not now")
 
 	p := Path()
@@ -142,4 +142,18 @@ func (s LINETestsSuite) Test_path_Transform(c *C) {
 <title>WWW</title></path>`)
 
 	c.Assert(cSL(p.Source()), Equals, obtained)
+}
+
+func (s PATHTestsSuite) Test_ID(c *C) {
+	//c.Skip("Not now")
+
+	check := cSL(`<path d="M0,0 L100,200" id="id-1"/>`)
+
+	t := Path().M(0, 0).L(100, 200)
+	t = t.ID("id-1")
+
+	c.Assert("id-1", Equals, t.GetID())
+
+	res := t.Source()
+	c.Assert(cSL(res), Equals, check)
 }
