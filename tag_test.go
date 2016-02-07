@@ -33,17 +33,17 @@ func (s TAGTestsSuite) Test_tag2(c *C) {
 	//c.Skip("Not now")
 
 	res := Tag("g").Source()
-	c.Assert(res, Equals, "<g/>\n")
+	c.Assert(cSL(res), Equals, cSL("<g/>"))
 
 	res = Tag("g", date_tag_list).Source()
-	c.Assert(res, Equals, "<g x=\"1\"/>\n")
+	c.Assert(cSL(res), Equals, cSL("<g x=\"1\"/>"))
 }
 
 func (s TAGTestsSuite) Test_tag_Attr(c *C) {
 	//c.Skip("Not now")
 
 	l := Tag("g").Attr("xxx", "123")
-	c.Assert(string(l.Source()), Equals, "<g xxx=\"123\"/>\n")
+	c.Assert(string(cSL(l.Source())), Equals, cSL("<g xxx=\"123\"/>"))
 }
 
 func (s TAGTestsSuite) Test_tag_Append_Title(c *C) {
@@ -51,7 +51,7 @@ func (s TAGTestsSuite) Test_tag_Append_Title(c *C) {
 
 	t := Title("WWW")
 	res := Tag("g").Append(t).Source()
-	c.Assert(res, Equals, "<g>\n<title>WWW</title></g>\n")
+	c.Assert(cSL(res), Equals, cSL("<g><title>WWW</title></g>"))
 }
 
 func (s TAGTestsSuite) Test_tag_Style(c *C) {
@@ -60,12 +60,12 @@ func (s TAGTestsSuite) Test_tag_Style(c *C) {
 	st := style.Style().FillRGB(1, 2, 3)
 
 	l := Tag("g").Style(st)
-	c.Assert(l.Source(), Equals, "<g style=\"fill:rgb(1,2,3)\"/>\n")
+	c.Assert(cSL(l.Source()), Equals, cSL("<g style=\"fill:rgb(1,2,3)\"/>"))
 }
 
 func (s TAGTestsSuite) Test_tag_Transform(c *C) {
 	//c.Skip("Not now")
 	st := transform.Transform().Matrix(12, 34, 45, 34.5, 212, 4.45)
 	l := Tag("g", date_tag_list).Transform(st)
-	c.Assert(string(l.Source()), Equals, "<g x=\"1\" transform=\"matrix(12.00, 34.00, 45.00, 34.50, 212.00, 4.45)\"/>\n")
+	c.Assert(cSL(l.Source()), Equals, cSL("<g x=\"1\" transform=\"matrix(12.00, 34.00, 45.00, 34.50, 212.00, 4.45)\"/>"))
 }

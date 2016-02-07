@@ -28,35 +28,40 @@ func (s GROUPTestsSuite) Test_group(c *C) {
 func (s GROUPTestsSuite) Test_group2(c *C) {
 	//c.Skip("Not now")
 
+	obtained := cSL(`<g style="stroke:rgb(10,20,30)"/>`)
+
 	l := Group(style.Style().StrokeRGB(10, 20, 30))
 	res := l.Source()
-	c.Assert(string(res), Equals, "<g style=\"stroke:rgb(10,20,30)\"/>\n")
+	c.Assert(cSL(res), Equals, obtained)
 }
 
 func (s GROUPTestsSuite) Test_group_Append_Title(c *C) {
 	//c.Skip("Not now")
+	obtained := cSL(`<g ><title>WWW</title></g>`)
 
 	l := Group()
 	t := Title("WWW")
 	l = l.Append(t)
 	res := l.Source()
-	c.Assert(string(res), Equals, "<g >\n<title>WWW</title></g>\n")
+	c.Assert(cSL(res), Equals, obtained)
 }
 
 func (s GROUPTestsSuite) Test_group_Style(c *C) {
 	//c.Skip("Not now")
+	obtained := cSL(`<g style="fill:rgb(1,2,3)"><title>WWW</title></g>`)
 
 	l := Group()
 	st := style.Style().FillRGB(1, 2, 3)
 	l = l.Style(st).Append(Title("WWW"))
-	c.Assert(string(l.Source()), Equals, "<g style=\"fill:rgb(1,2,3)\">\n<title>WWW</title></g>\n")
+	c.Assert(cSL(l.Source()), Equals, obtained)
 }
 
 func (s GROUPTestsSuite) Test_group_Transform(c *C) {
 	//c.Skip("Not now")
+	obtained := cSL(`<g transform="matrix(12.00, 34.00, 45.00, 34.50, 212.00, 4.45)"><title>WWW</title></g>`)
 
 	l := Group()
 	st := transform.Transform().Matrix(12, 34, 45, 34.5, 212, 4.45)
 	l = l.Transform(st).Append(Title("WWW"))
-	c.Assert(string(l.Source()), Equals, "<g transform=\"matrix(12.00, 34.00, 45.00, 34.50, 212.00, 4.45)\">\n<title>WWW</title></g>\n")
+	c.Assert(cSL(l.Source()), Equals, obtained)
 }
