@@ -1,8 +1,6 @@
 package svg
 
 import (
-	"strings"
-
 	"github.com/iostrovok/svg/style"
 	"github.com/iostrovok/svg/transform"
 )
