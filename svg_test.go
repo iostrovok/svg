@@ -3,8 +3,6 @@ package svg
 import (
 	. "gopkg.in/check.v1"
 	"testing"
-
-	"fmt"
 )
 
 func TestSVG(t *testing.T) {
@@ -47,8 +45,6 @@ func (s SVGTestsSuite) Test_SVG_ViewBox(c *C) {
 	c.Assert(m.Width(), Equals, 100)
 	m.Width(600)
 	c.Assert(m.Width(), Equals, 600)
-
-	fmt.Printf("\n\n---------------------------\n\n%s\n\n--------------------------------", m.Source())
 
 	line := cSL(`<?xml version="1.0"?>
 <svg

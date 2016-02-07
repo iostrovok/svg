@@ -36,7 +36,7 @@ func (s TEXTTestsSuite) Test_text2(c *C) {
 	c.Assert(cSL(res), Equals, obtained)
 }
 
-func (s TEXTTestsSuite) Test_text_AddString(c *C) {
+func (s TEXTTestsSuite) Test_AddString(c *C) {
 	//c.Skip("Not now")
 
 	obtained := cSL(`<text style="font-family:Verdana;font-size:55;fill:blue" x="250" y="150">Hello, out there Next hello, out there</text>`)
@@ -62,7 +62,7 @@ func (s TEXTTestsSuite) Test_Transform(c *C) {
 	c.Assert(cSL(res), Equals, obtained)
 }
 
-func (s TEXTTestsSuite) Test_text_Attrs(c *C) {
+func (s TEXTTestsSuite) Test_Attrs(c *C) {
 	//c.Skip("Not now")
 
 	obtained := cSL(`<text id="id-1">Next hello, out there</text>`)
@@ -76,7 +76,7 @@ func (s TEXTTestsSuite) Test_text_Attrs(c *C) {
 	c.Assert(cSL(res), Equals, obtained)
 }
 
-func (s TEXTTestsSuite) Test_text_ID(c *C) {
+func (s TEXTTestsSuite) Test_ID(c *C) {
 	//c.Skip("Not now")
 
 	obtained := cSL(`<text id="id-1">Next hello, out there</text>`)
