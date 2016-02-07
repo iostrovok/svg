@@ -39,11 +39,22 @@ func (text textBody) Source() string {
 	return text.str
 }
 
+// Source() returns svg implementation of TEXT element
+func (text textBody) GetID() string {
+	return ""
+}
+
+// // Attr adds any user attribute.
+// func (text *textBody) GetAttr() map[string]string {
+// }
+
 type TEXT struct {
 	iNode
 	*node
 
 	typ textType
+
+	id string
 
 	x, y   int
 	dim_xy string
@@ -81,6 +92,23 @@ func Tref(s ...style.STYLE) *TEXT {
 		typ:  isTRef,
 		node: newNode(s...),
 	}
+}
+
+// ID(string) set element id.
+func (text *TEXT) ID(id string) *TEXT {
+	text.node.id = id
+	return text
+}
+
+// GetID() returns lement id.
+func (text *TEXT) GetID() string {
+	return text.node.id
+}
+
+// Attr adds any user attribute.
+func (text *TEXT) Attr(attr, values string) *TEXT {
+	text.node.attrs[attr] = values
+	return text
 }
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
@@ -125,7 +153,7 @@ func (text *TEXT) Source() string {
 
 	body = text.bodyTags(body)
 
-	return _Source(body, end, text.node.inner)
+	return _Source(text, body, end, text.node.inner)
 }
 
 func (text *TEXT) bodyTags(body string) string {

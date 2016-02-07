@@ -10,6 +10,9 @@ import (
 type LINE struct {
 	iNode
 	*node
+
+	id string
+
 	x1, x2 int
 	y1, y2 int
 }
@@ -27,6 +30,23 @@ func Line(x1, y1, x2, y2 int, s ...style.STYLE) *LINE {
 		x1: x1, x2: x2,
 		y1: y1, y2: y2,
 	}
+}
+
+// ID(string) set element id.
+func (line *LINE) ID(id string) *LINE {
+	line.node.id = id
+	return line
+}
+
+// GetID() returns lement id.
+func (line *LINE) GetID() string {
+	return line.node.id
+}
+
+// Attr adds any user attribute.
+func (line *LINE) Attr(attr, values string) *LINE {
+	line.node.attrs[attr] = values
+	return line
 }
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
@@ -56,5 +76,5 @@ func (line *LINE) Transform(tr transform.TRANSFORM) *LINE {
 // Source() returns svg implementation of LINE element
 func (line *LINE) Source() string {
 	body := fmt.Sprintf(lineTag, line.x1, line.y1, line.x2, line.y2, line.node.mSource())
-	return _Source(body, lineEndTag, line.node.inner)
+	return _Source(line, body, lineEndTag, line.node.inner)
 }

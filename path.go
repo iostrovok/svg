@@ -50,6 +50,9 @@ type pathPart struct {
 type PATH struct {
 	iNode
 	*node
+
+	id string
+
 	parts []*pathPart
 }
 
@@ -65,6 +68,23 @@ func Path(s ...style.STYLE) *PATH {
 // AppendTo is interface function
 func (path *PATH) AppendTo(n iNode) *PATH {
 	n.appendIn(path)
+	return path
+}
+
+// ID(string) set element id.
+func (path *PATH) ID(id string) *PATH {
+	path.node.id = id
+	return path
+}
+
+// GetID() returns lement id.
+func (path *PATH) GetID() string {
+	return path.node.id
+}
+
+// Attr adds any user attribute.
+func (path *PATH) Attr(attr, values string) *PATH {
+	path.node.attrs[attr] = values
 	return path
 }
 
@@ -116,7 +136,7 @@ func (path *PATH) Source() string {
 	}
 
 	bodyLine := fmt.Sprintf(pathTag, strings.Join(body, " "), path.node.mSource())
-	return _Source(bodyLine, pathEndTag, path.inner)
+	return _Source(path, bodyLine, pathEndTag, path.inner)
 }
 
 func (p *pathPart) drawPart() string {

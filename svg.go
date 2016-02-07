@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"strings"
 
 	"github.com/iostrovok/svg/style"
 )
@@ -31,8 +32,8 @@ var (
 `
 	svgEnd     = `</svg>`
 	vbfmt      = `viewBox="%d %d %d %d"`
-	emptyclose = "/>\n"
-	br         = "\n"
+	emptyclose = "/>"
+	br         = ""
 )
 
 /*
@@ -105,16 +106,28 @@ func (svg *SVG) Source() string {
 	}
 	body := fmt.Sprintf(svgTop, svg.w, svg.dim, svg.h, svg.dim, vb)
 
-	return _Source(body, svgEnd, svg.inner)
+	return _Source(svg, body, svgEnd, svg.inner)
 }
 
-func _Source(body, tagEnd string, inner []iNode) string {
+func _Source(n iNode, body, tagEnd string, inner []iNode) string {
+
+	// for more beautiful code
+	body = strings.TrimRight(body, " ")
+
+	if n.GetID() != "" {
+		body += ` id="` + n.GetID() + `"`
+	}
 
 	if len(inner) == 0 {
 		return body + emptyclose
 	}
 
-	return body + ">\n" + _innerSource(inner) + tagEnd + br
+	return body + ">" + _innerSource(inner) + tagEnd + br
+}
+
+// GetID() returns lement id.
+func (svg *SVG) GetID() string {
+	return ""
 }
 
 // Source() returns svg implementation of SVG element
@@ -139,7 +152,7 @@ func (svg *SVG) Save(Writer io.Writer) error {
 	return err
 }
 
-// // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
+// Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
 func (svg *SVG) Append(n iNode) *SVG {
 	svg.node.inner = append(svg.node.inner, n)
 	return svg

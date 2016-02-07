@@ -10,6 +10,8 @@ import (
 type GROUP struct {
 	iNode
 	*node
+
+	id string
 }
 
 const (
@@ -22,6 +24,23 @@ func Group(s ...style.STYLE) *GROUP {
 	return &GROUP{
 		node: newNode(s...),
 	}
+}
+
+// ID(string) set element id.
+func (group *GROUP) ID(id string) *GROUP {
+	group.node.id = id
+	return group
+}
+
+// GetID() returns lement id.
+func (group *GROUP) GetID() string {
+	return group.node.id
+}
+
+// Attr adds any user attribute.
+func (group *GROUP) Attr(attr, values string) *GROUP {
+	group.node.attrs[attr] = values
+	return group
 }
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
@@ -51,5 +70,5 @@ func (group *GROUP) Transform(tr transform.TRANSFORM) *GROUP {
 // Source() returns svg implementation of GROUP element
 func (group *GROUP) Source() string {
 	body := fmt.Sprintf(groupTag, group.node.mSource())
-	return _Source(body, groupEndTag, group.node.inner)
+	return _Source(group, body, groupEndTag, group.node.inner)
 }

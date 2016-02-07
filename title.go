@@ -26,3 +26,20 @@ func Title(text string) *TITLE {
 func (title *TITLE) Source() string {
 	return title.body
 }
+
+// ID(string) set element id.
+func (title *TITLE) ID(id string) *TITLE {
+	title.node.id = id
+	return title
+}
+
+// GetID() returns lement id.
+func (title *TITLE) GetID() string {
+	return title.node.id
+}
+
+// Attr adds any user attribute.
+func (title *TITLE) Attr(attr, values string) *TITLE {
+	title.node.attrs[attr] = values
+	return title
+}

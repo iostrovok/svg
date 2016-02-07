@@ -10,8 +10,8 @@ import (
 type TAG struct {
 	iNode
 	*node
-	tag  string
-	attr map[string]string
+	id  string
+	tag string
 }
 
 // Constructor of "tag" object
@@ -19,14 +19,32 @@ func Tag(tag string, attr ...map[string]string) *TAG {
 	t := &TAG{
 		node: newNode(),
 		tag:  tag,
-		attr: map[string]string{},
 	}
 
 	if len(attr) > 0 {
-		t.attr = attr[0]
+		for k, v := range attr[0] {
+			t.Attr(k, v)
+		}
 	}
-	return t
 
+	return t
+}
+
+// ID(string) set element id.
+func (tag *TAG) ID(id string) *TAG {
+	tag.node.id = id
+	return tag
+}
+
+// GetID() returns lement id.
+func (tag *TAG) GetID() string {
+	return tag.node.id
+}
+
+// Attr adds any user attribute.
+func (tag *TAG) Attr(attr, values string) *TAG {
+	tag.node.attrs[attr] = values
+	return tag
 }
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
@@ -53,36 +71,13 @@ func (tag *TAG) Transform(tr transform.TRANSFORM) *TAG {
 	return tag
 }
 
-// Attr sets the "transform.TRANSFORM" object
-func (tag *TAG) Attr(k, v string) *TAG {
-	tag.attr[k] = v
-	return tag
-}
-
 // Source() returns svg implementation of TAG element
 func (tag *TAG) Source() string {
-	out := []string{`<` + tag.tag}
-	has := map[string]bool{}
+	body := `<` + tag.tag
 
-	for k, v := range tag.attr {
-		if k != "" && v != "" {
-			out = append(out, k+`="`+v+`"`)
-			has[strings.ToLower(k)] = true
-		}
+	if attrs := tag.node.attrSource(); attrs != "" {
+		body += ` ` + attrs
 	}
 
-	if !has[`style`] {
-		if s := tag.node.styleSource(); s != "" {
-			out = append(out, s)
-		}
-	}
-
-	if !has[`transform`] {
-		if s := tag.node.transSource(); s != "" {
-			out = append(out, s)
-		}
-	}
-
-	body := strings.Join(out, ` `)
-	return _Source(body, `</`+tag.tag+`>`, tag.node.inner)
+	return _Source(tag, body, `</`+tag.tag+`>`, tag.node.inner)
 }

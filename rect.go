@@ -10,6 +10,9 @@ import (
 type RECT struct {
 	iNode
 	*node
+
+	id string
+
 	x, y   int
 	width  int
 	height int
@@ -37,6 +40,23 @@ func (rect *RECT) AppendTo(n iNode) *RECT {
 	return rect
 }
 
+// ID(string) set element id.
+func (rect *RECT) ID(id string) *RECT {
+	rect.node.id = id
+	return rect
+}
+
+// GetID() returns lement id.
+func (rect *RECT) GetID() string {
+	return rect.node.id
+}
+
+// Attr adds any user attribute.
+func (rect *RECT) Attr(attr, values string) *RECT {
+	rect.node.attrs[attr] = values
+	return rect
+}
+
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
 func (rect *RECT) Append(nodes ...iNode) *RECT {
 	rect.node.Append(nodes...)
@@ -58,6 +78,6 @@ func (rect *RECT) Transform(tr transform.TRANSFORM) *RECT {
 // Source() returns svg implementation of RECT element
 func (rect *RECT) Source() string {
 	body := fmt.Sprintf(rectTag, rect.x, rect.y, rect.width, rect.height, rect.st.Source())
-	return _Source(body, rectEndTag, rect.inner)
+	return _Source(rect, body, rectEndTag, rect.inner)
 
 }
