@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 )
 
@@ -99,9 +100,18 @@ func main() {
 
 	lines := []string{}
 
-	for tag, v := range tags {
-		for _, k := range v {
-			res := tagReg.ReplaceAllString(maps[k], tag)
+	tagsList := []string{}
+	for one := range tags {
+		tagsList = append(tagsList, one)
+	}
+
+	sort.Strings(tagsList)
+
+	for _, one := range tagsList {
+		list := tags[one]
+		sort.Strings(list)
+		for _, k := range list {
+			res := tagReg.ReplaceAllString(maps[k], one)
 			lines = append(lines, res)
 		}
 	}
