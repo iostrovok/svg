@@ -28,14 +28,25 @@ func (title *TITLE) Source() string {
 }
 
 // ID(string) set element id.
-func (title *TITLE) ID(id string) *TITLE {
-	title.node.id = id
-	return title
+func (t *TITLE) ID(id string) *TITLE {
+	t.node.id = id
+	return t
 }
 
 // GetID() returns lement id.
-func (title *TITLE) GetID() string {
-	return title.node.id
+func (t *TITLE) GetID() string {
+	return t.node.id
+}
+
+// Class(string) set element class.
+func (t *TITLE) Class(id string) *TITLE {
+	t.node.class = id
+	return t
+}
+
+// GetID() returns element id class for string.
+func (t *TITLE) GetClass() string {
+	return t.node.class
 }
 
 // Attr adds any user attribute.

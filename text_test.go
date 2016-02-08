@@ -28,7 +28,7 @@ func (s TEXTTestsSuite) Test_text(c *C) {
 func (s TEXTTestsSuite) Test_text2(c *C) {
 	//c.Skip("Not now")
 
-	obtained := cSL(`<text style="font-family:Verdana;font-size:55;fill:blue" x="250" y="150">Hello, out there</text>`)
+	obtained := cSL(`<text x="250" y="150" style="font-family:Verdana;font-size:55;fill:blue">Hello, out there</text>`)
 	f := style.Font("font-family:Verdana;font-size:55")
 	text := Text(style.Style().Fill("blue").Font(f))
 	text = text.XY(250, 150).String("Hello, out there")
@@ -39,7 +39,7 @@ func (s TEXTTestsSuite) Test_text2(c *C) {
 func (s TEXTTestsSuite) Test_AddString(c *C) {
 	//c.Skip("Not now")
 
-	obtained := cSL(`<text style="font-family:Verdana;font-size:55;fill:blue" x="250" y="150">Hello, out there Next hello, out there</text>`)
+	obtained := cSL(`<text x="250" y="150" style="font-family:Verdana;font-size:55;fill:blue" >Hello, out there Next hello, out there</text>`)
 	f := style.Font("font-family:Verdana;font-size:55")
 	text := Text(style.Style().Fill("blue").Font(f))
 	text = text.XY(250, 150).String("Hello, out there")
@@ -52,7 +52,7 @@ func (s TEXTTestsSuite) Test_AddString(c *C) {
 func (s TEXTTestsSuite) Test_Transform(c *C) {
 	//c.Skip("Not now")
 
-	obtained := cSL(`<text style="font-family:Verdana;font-size:55;fill:blue" transform="matrix(12.00, 34.00, 45.00, 34.50, 212.00, 4.45)" x="250" y="150">Hello, out there</text>`)
+	obtained := cSL(`<text x="250" y="150" style="font-family:Verdana;font-size:55;fill:blue" transform="matrix(12.00, 34.00, 45.00, 34.50, 212.00, 4.45)">Hello, out there</text>`)
 	f := style.Font("font-family:Verdana;font-size:55")
 	text := Text(style.Style().Fill("blue").Font(f))
 	text = text.XY(250, 150).String("Hello, out there")

@@ -1,25 +1,31 @@
 package svg
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/iostrovok/svg/style"
 	"github.com/iostrovok/svg/transform"
 )
 
+const (
+	classLine = `class="%s"`
+)
+
 type iNode interface {
 	Source() string
 	GetID() string
 	appendIn(iNode)
+	nodes() *node
 }
 
 type node struct {
 	iNode
-	id    string
-	st    style.STYLE
-	tr    transform.TRANSFORM
-	inner []iNode
-	attrs map[string]string
+	class, id string
+	st        style.STYLE
+	tr        transform.TRANSFORM
+	inner     []iNode
+	attrs     map[string]string
 }
 
 func newNode(st ...style.STYLE) *node {
@@ -47,6 +53,10 @@ func (n *node) mSource() string {
 		out = append(out, tr)
 	}
 
+	if class := n.GetClass(); class != "" {
+		out = append(out, fmt.Sprintf(classLine, class))
+	}
+
 	return strings.Join(out, " ")
 }
 
@@ -55,9 +65,19 @@ func (n *node) ID(id string) {
 	n.id = id
 }
 
-// GetID() returns lement id.
+// GetID() returns element id.
 func (n *node) GetID() string {
 	return n.id
+}
+
+// Class(string) set element class.
+func (n *node) Class(class string) {
+	n.class = class
+}
+
+// GetID() returns element id class for string.
+func (n *node) GetClass() string {
+	return n.class
 }
 
 // Style sets the "style.STYLE" object
@@ -105,6 +125,12 @@ func (n *node) attrSource() string {
 	if !has[`transform`] {
 		if s := n.transSource(); s != "" {
 			out = append(out, s)
+		}
+	}
+
+	if !has[`class`] {
+		if s := n.GetClass(); s != "" {
+			out = append(out, fmt.Sprintf(classLine, s))
 		}
 	}
 

@@ -6,7 +6,7 @@ import (
 )
 
 type TAG struct {
-	iNode
+	//iNode
 	*node
 	id  string
 	tag string
@@ -28,15 +28,30 @@ func Tag(tag string, attr ...map[string]string) *TAG {
 	return t
 }
 
+func (t *TAG) nodes() *node {
+	return t.node
+}
+
 // ID(string) set element id.
-func (tag *TAG) ID(id string) *TAG {
-	tag.node.id = id
-	return tag
+func (t *TAG) ID(id string) *TAG {
+	t.node.id = id
+	return t
 }
 
 // GetID() returns lement id.
-func (tag *TAG) GetID() string {
-	return tag.node.id
+func (t *TAG) GetID() string {
+	return t.node.id
+}
+
+// Class(string) set element class.
+func (t *TAG) Class(id string) *TAG {
+	t.node.class = id
+	return t
+}
+
+// GetID() returns element id class for string.
+func (t *TAG) GetClass() string {
+	return t.node.class
 }
 
 // Attr adds any user attribute.
@@ -72,10 +87,5 @@ func (tag *TAG) Transform(tr transform.TRANSFORM) *TAG {
 // Source() returns svg implementation of TAG element
 func (tag *TAG) Source() string {
 	body := `<` + tag.tag
-
-	if attrs := tag.node.attrSource(); attrs != "" {
-		body += ` ` + attrs
-	}
-
 	return _Source(tag, body, `</`+tag.tag+`>`, tag.node.inner)
 }

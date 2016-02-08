@@ -12,7 +12,7 @@ import (
 
 // SVG defines the location of the generated SVG
 type SVG struct {
-	iNode
+	//iNode
 	*node
 	w, h int
 	dim  string
@@ -101,9 +101,11 @@ func (svg *SVG) GetViewBox() (x, y, width, height int) {
 // Source() returns svg implementation of SVG element
 func (svg *SVG) Source() string {
 	vb := ""
+
 	if svg.vx != 0 || svg.vy != 0 || svg.vw != 0 || svg.vh != 0 {
 		vb = fmt.Sprintf(vbfmt, svg.vx, svg.vy, svg.vw, svg.vh)
 	}
+
 	body := fmt.Sprintf(svgTop, svg.w, svg.dim, svg.h, svg.dim, vb)
 
 	return _Source(svg, body, svgEnd, svg.inner)
@@ -118,6 +120,10 @@ func _Source(n iNode, body, tagEnd string, inner []iNode) string {
 		body += ` id="` + n.GetID() + `"`
 	}
 
+	if attrs := n.nodes().attrSource(); attrs != "" {
+		body += ` ` + attrs
+	}
+
 	if len(inner) == 0 {
 		return body + emptyclose
 	}
@@ -130,7 +136,16 @@ func (svg *SVG) GetID() string {
 	return ""
 }
 
-// Source() returns svg implementation of SVG element
+// GetID() returns element id class for string.
+func (t *SVG) GetClass() string {
+	return ""
+}
+
+func (t *SVG) nodes() *node {
+	return t.node
+}
+
+// _innerSource() returns svg implementation of SVG element
 func (svg *SVG) InnerSource() string {
 	return _innerSource(svg.inner)
 }

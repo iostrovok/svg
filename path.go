@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/iostrovok/svg/style"
-	"github.com/iostrovok/svg/transform"
 )
 
 /*
@@ -26,7 +25,7 @@ const (
 	format3Point        = "%d,%d %d,%d %d,%d"
 	formatPartStart     = "%s%s"
 
-	pathTag    = `<path d="%s" %s`
+	pathTag    = `<path d="%s"`
 	pathEndTag = `</path>`
 )
 
@@ -48,7 +47,7 @@ type pathPart struct {
 }
 
 type PATH struct {
-	iNode
+	//iNode
 	*node
 
 	id string
@@ -63,47 +62,6 @@ func Path(s ...style.STYLE) *PATH {
 		parts: []*pathPart{},
 	}
 	return p
-}
-
-// AppendTo is interface function
-func (path *PATH) AppendTo(n iNode) *PATH {
-	n.appendIn(path)
-	return path
-}
-
-// ID(string) set element id.
-func (path *PATH) ID(id string) *PATH {
-	path.node.id = id
-	return path
-}
-
-// GetID() returns lement id.
-func (path *PATH) GetID() string {
-	return path.node.id
-}
-
-// Attr adds any user attribute.
-func (path *PATH) Attr(attr, values string) *PATH {
-	path.node.attrs[attr] = values
-	return path
-}
-
-// Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
-func (path *PATH) Append(nodes ...iNode) *PATH {
-	path.node.Append(nodes...)
-	return path
-}
-
-// Style sets the "style.STYLE" object
-func (path *PATH) Style(st style.STYLE) *PATH {
-	path.node.Style(st)
-	return path
-}
-
-// Transform sets the "transform.TRANSFORM" object
-func (path *PATH) Transform(tr transform.TRANSFORM) *PATH {
-	path.node.Transform(tr)
-	return path
 }
 
 // Source() returns svg implementation of *PATH element
@@ -135,7 +93,7 @@ func (path *PATH) Source() string {
 		last = p
 	}
 
-	bodyLine := fmt.Sprintf(pathTag, strings.Join(body, " "), path.node.mSource())
+	bodyLine := fmt.Sprintf(pathTag, strings.Join(body, " "))
 	return _Source(path, bodyLine, pathEndTag, path.inner)
 }
 

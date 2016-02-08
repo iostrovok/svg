@@ -6,17 +6,16 @@ import (
 	"strings"
 
 	"github.com/iostrovok/svg/style"
-	"github.com/iostrovok/svg/transform"
 )
 
 const (
-	textTag    = `<text %s`
+	textTag    = `<text `
 	textEndTag = `</text>`
 
-	tspanTag    = `<tspan %s %s`
+	tspanTag    = `<tspan %s`
 	tspanEndTag = `</tspan>`
 
-	trefTag    = ` <tref xlink:href="%s" %s`
+	trefTag    = ` <tref xlink:href="%s"`
 	trefEndTag = `</tspan>`
 )
 
@@ -29,7 +28,7 @@ const (
 )
 
 type textBody struct {
-	iNode
+	//iNode
 	*node
 	str string
 }
@@ -44,9 +43,10 @@ func (text textBody) GetID() string {
 	return ""
 }
 
-// // Attr adds any user attribute.
-// func (text *textBody) GetAttr() map[string]string {
-// }
+// GetID() returns element id class for string.
+func (t textBody) GetClass() string {
+	return ""
+}
 
 type TEXT struct {
 	iNode
@@ -94,47 +94,6 @@ func Tref(s ...style.STYLE) *TEXT {
 	}
 }
 
-// ID(string) set element id.
-func (text *TEXT) ID(id string) *TEXT {
-	text.node.id = id
-	return text
-}
-
-// GetID() returns lement id.
-func (text *TEXT) GetID() string {
-	return text.node.id
-}
-
-// Attr adds any user attribute.
-func (text *TEXT) Attr(attr, values string) *TEXT {
-	text.node.attrs[attr] = values
-	return text
-}
-
-// Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
-func (text *TEXT) Append(nodes ...iNode) *TEXT {
-	text.node.Append(nodes...)
-	return text
-}
-
-// AppendTo is interface function
-func (text *TEXT) AppendTo(n iNode) *TEXT {
-	n.appendIn(text)
-	return text
-}
-
-// Style sets the "style.STYLE" object
-func (text *TEXT) Style(st style.STYLE) *TEXT {
-	text.node.Style(st)
-	return text
-}
-
-// Transform sets the "transform.TRANSFORM" object
-func (text *TEXT) Transform(tr transform.TRANSFORM) *TEXT {
-	text.node.Transform(tr)
-	return text
-}
-
 // Source() returns svg implementation of TEXT element
 func (text *TEXT) Source() string {
 	body := ""
@@ -142,12 +101,12 @@ func (text *TEXT) Source() string {
 	switch text.typ {
 	case isTRef:
 		end = trefEndTag
-		body = fmt.Sprintf(trefTag, text.href, text.node.mSource())
+		body = fmt.Sprintf(trefTag, text.href)
 	case isTSpan:
 		end = tspanEndTag
-		body = fmt.Sprintf(tspanTag, text.href, text.node.mSource())
+		body = fmt.Sprintf(tspanTag, text.href)
 	default:
-		body = fmt.Sprintf(textTag, text.node.mSource())
+		body = textTag
 		end = textEndTag
 	}
 

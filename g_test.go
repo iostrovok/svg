@@ -79,3 +79,11 @@ func (s GROUPTestsSuite) Test_ID(c *C) {
 	res := t.Source()
 	c.Assert(cSL(res), Equals, check)
 }
+
+func (s GROUPTestsSuite) Test_Attr(c *C) {
+	//c.Skip("Not now")
+	obtained := cSL(`<g xxx="123"/>`)
+
+	l := Group().Attr("xxx", "123")
+	c.Assert(string(cSL(l.Source())), Equals, obtained)
+}

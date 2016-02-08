@@ -29,6 +29,7 @@ func (s SVGTestsSuite) Test_SVG_Source(c *C) {
 	//c.Skip("Not now")
 
 	m := New(100, 100)
+
 	t := len(m.Source()) > 10
 	c.Assert(t, Equals, true)
 }
@@ -61,6 +62,7 @@ func (s SVGTestsSuite) Test_AppendTo_Line(c *C) {
 	//c.Skip("Not now")
 	m := New(100, 100)
 	Line(10, 10, 20, 20).AppendTo(m)
+
 	c.Assert(cSL(m.InnerSource()), Equals, TestSVGWithLine)
 }
 
@@ -75,6 +77,7 @@ func (s SVGTestsSuite) Test_AppendTo_Path(c *C) {
 	// c.Skip("Not now")
 	m := New(100, 100)
 	Path().M(0, 0).V(100).Vv(200).H(300).Hh(400).AppendTo(m)
+
 	c.Assert(cSL(m.InnerSource()), Equals, TestSVGWithPath)
 }
 
@@ -82,6 +85,7 @@ func (s SVGTestsSuite) Test_Append_Group(c *C) {
 	//c.Skip("Not now")
 	l := Line(10, 10, 20, 20)
 	m := New(100, 100).Append(l)
+
 	c.Assert(cSL(m.InnerSource()), Equals, TestSVGWithLine)
 }
 
@@ -89,6 +93,7 @@ func (s SVGTestsSuite) Test_Append_Line(c *C) {
 	//c.Skip("Not now")
 	l := Line(10, 10, 20, 20)
 	m := New(100, 100).Append(l)
+
 	c.Assert(cSL(m.InnerSource()), Equals, TestSVGWithLine)
 }
 
@@ -96,6 +101,7 @@ func (s SVGTestsSuite) Test_Append_Rect(c *C) {
 	//c.Skip("Not now")
 	r := Rect(10, 10, 20, 20)
 	m := New(100, 100).Append(r)
+
 	c.Assert(cSL(m.InnerSource()), Equals, TestSVGWithRect)
 }
 
@@ -103,5 +109,6 @@ func (s SVGTestsSuite) Test_Append_Path(c *C) {
 	//c.Skip("Not now")
 	p := Path().M(0, 0).V(100).Vv(200).H(300).Hh(400)
 	m := New(1000, 1000).Append(p)
+
 	c.Assert(cSL(m.InnerSource()), Equals, TestSVGWithPath)
 }

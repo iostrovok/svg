@@ -82,7 +82,7 @@ func (s TAGTestsSuite) Test_Transform(c *C) {
 func (s TAGTestsSuite) Test_ID(c *C) {
 	//c.Skip("Not now")
 
-	check := cSL(`<g x="1" id="id-1"/>`)
+	check := cSL(`<g id="id-1" x="1"/>`)
 
 	t := Tag("g", date_tag_list)
 	t = t.ID("id-1")
