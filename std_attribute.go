@@ -1,6 +1,95 @@
 package svg
-import "github.com/iostrovok/svg/transform"
-import "github.com/iostrovok/svg/style"
+
+import (
+	"github.com/iostrovok/svg/transform"
+	"github.com/iostrovok/svg/style"
+	"strconv"
+)
+
+// >>>>>>> START CIRCLE
+
+// Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
+func (t *CIRCLE) Append(nodes ...iNode) *CIRCLE {
+	t.node.Append(nodes...)
+	return t
+}
+
+// AppendTo is interface function
+func (t *CIRCLE) AppendTo(n iNode) *CIRCLE {
+	n.appendIn(t)
+	return t
+}
+
+// Attr adds any user attribute.
+func (t *CIRCLE) Attr(attr, value string) *CIRCLE {
+	t.node.attrs[attr] = value
+	return t
+}
+
+// Class(string) set element class.
+func (t *CIRCLE) Class(id string) *CIRCLE {
+	t.node.class = id
+	return t
+}
+
+// GetClass() returns element id class for string.
+func (t *CIRCLE) GetClass() string {
+	return t.node.class
+}
+
+// XYWH sets  CX coordinate for element.
+func (t *CIRCLE) CX(x float64, dim ...string) *CIRCLE {
+	t.node.XYWH("cx", x, dim...)
+	return t
+}
+
+// XYWH sets  CY coordinate for element.
+func (t *CIRCLE) CY(x float64, dim ...string) *CIRCLE {
+	t.node.XYWH("cy", x, dim...)
+	return t
+}
+
+// ID(string) set element id.
+func (t *CIRCLE) ID(id string) *CIRCLE {
+	t.node.id = id
+	return t
+}
+
+// GetID() returns lement id.
+func (t *CIRCLE) GetID() string {
+	return t.node.id
+}
+
+// genID() creates element id.
+func (n *CIRCLE) genID() {
+	idCounter++
+	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
+}
+
+// nodes returns inner node object
+func (t *CIRCLE) nodes() *node {
+	return t.node
+}
+
+// XYWH sets radius for element.
+func (t *CIRCLE) R(x float64, dim ...string) *CIRCLE {
+	t.node.XYWH("r", x, dim...)
+	return t
+}
+
+// Style sets the "style.STYLE" object
+func (t *CIRCLE) Style(st style.STYLE) *CIRCLE {
+	t.node.Style(st)
+	return t
+}
+
+// Transform sets the "transform.TRANSFORM" object
+func (t *CIRCLE) Transform(tr transform.TRANSFORM) *CIRCLE {
+	t.node.Transform(tr)
+	return t
+}
+
+// >>>>>>> FINISH CIRCLE
 
 // >>>>>>> START GROUP
 
@@ -17,8 +106,8 @@ func (t *GROUP) AppendTo(n iNode) *GROUP {
 }
 
 // Attr adds any user attribute.
-func (t *GROUP) Attr(attr, values string) *GROUP {
-	t.node.attrs[attr] = values
+func (t *GROUP) Attr(attr, value string) *GROUP {
+	t.node.attrs[attr] = value
 	return t
 }
 
@@ -28,7 +117,7 @@ func (t *GROUP) Class(id string) *GROUP {
 	return t
 }
 
-// GetID() returns element id class for string.
+// GetClass() returns element id class for string.
 func (t *GROUP) GetClass() string {
 	return t.node.class
 }
@@ -42,6 +131,12 @@ func (t *GROUP) ID(id string) *GROUP {
 // GetID() returns lement id.
 func (t *GROUP) GetID() string {
 	return t.node.id
+}
+
+// genID() creates element id.
+func (n *GROUP) genID() {
+	idCounter++
+	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
 // nodes returns inner node object
@@ -78,8 +173,8 @@ func (t *LINE) AppendTo(n iNode) *LINE {
 }
 
 // Attr adds any user attribute.
-func (t *LINE) Attr(attr, values string) *LINE {
-	t.node.attrs[attr] = values
+func (t *LINE) Attr(attr, value string) *LINE {
+	t.node.attrs[attr] = value
 	return t
 }
 
@@ -89,7 +184,7 @@ func (t *LINE) Class(id string) *LINE {
 	return t
 }
 
-// GetID() returns element id class for string.
+// GetClass() returns element id class for string.
 func (t *LINE) GetClass() string {
 	return t.node.class
 }
@@ -103,6 +198,12 @@ func (t *LINE) ID(id string) *LINE {
 // GetID() returns lement id.
 func (t *LINE) GetID() string {
 	return t.node.id
+}
+
+// genID() creates element id.
+func (n *LINE) genID() {
+	idCounter++
+	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
 // nodes returns inner node object
@@ -139,8 +240,8 @@ func (t *PATH) AppendTo(n iNode) *PATH {
 }
 
 // Attr adds any user attribute.
-func (t *PATH) Attr(attr, values string) *PATH {
-	t.node.attrs[attr] = values
+func (t *PATH) Attr(attr, value string) *PATH {
+	t.node.attrs[attr] = value
 	return t
 }
 
@@ -150,7 +251,7 @@ func (t *PATH) Class(id string) *PATH {
 	return t
 }
 
-// GetID() returns element id class for string.
+// GetClass() returns element id class for string.
 func (t *PATH) GetClass() string {
 	return t.node.class
 }
@@ -164,6 +265,12 @@ func (t *PATH) ID(id string) *PATH {
 // GetID() returns lement id.
 func (t *PATH) GetID() string {
 	return t.node.id
+}
+
+// genID() creates element id.
+func (n *PATH) genID() {
+	idCounter++
+	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
 // nodes returns inner node object
@@ -200,8 +307,8 @@ func (t *RECT) AppendTo(n iNode) *RECT {
 }
 
 // Attr adds any user attribute.
-func (t *RECT) Attr(attr, values string) *RECT {
-	t.node.attrs[attr] = values
+func (t *RECT) Attr(attr, value string) *RECT {
+	t.node.attrs[attr] = value
 	return t
 }
 
@@ -211,9 +318,15 @@ func (t *RECT) Class(id string) *RECT {
 	return t
 }
 
-// GetID() returns element id class for string.
+// GetClass() returns element id class for string.
 func (t *RECT) GetClass() string {
 	return t.node.class
+}
+
+// Height sets height for element.
+func (t *RECT) Height(x float64, dim ...string) *RECT {
+	t.node.XYWH("height", x, dim...)
+	return t
 }
 
 // ID(string) set element id.
@@ -227,9 +340,27 @@ func (t *RECT) GetID() string {
 	return t.node.id
 }
 
+// genID() creates element id.
+func (n *RECT) genID() {
+	idCounter++
+	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
+}
+
 // nodes returns inner node object
 func (t *RECT) nodes() *node {
 	return t.node
+}
+
+// XYWH sets  RX coordinate for element.
+func (t *RECT) RX(x float64, dim ...string) *RECT {
+	t.node.XYWH("rx", x, dim...)
+	return t
+}
+
+// XYWH sets  RY coordinate for element.
+func (t *RECT) RY(x float64, dim ...string) *RECT {
+	t.node.XYWH("ry", x, dim...)
+	return t
 }
 
 // Style sets the "style.STYLE" object
@@ -241,6 +372,24 @@ func (t *RECT) Style(st style.STYLE) *RECT {
 // Transform sets the "transform.TRANSFORM" object
 func (t *RECT) Transform(tr transform.TRANSFORM) *RECT {
 	t.node.Transform(tr)
+	return t
+}
+
+// Width sets  width for element.
+func (t *RECT) Width(x float64, dim ...string) *RECT {
+	t.node.XYWH("width", x, dim...)
+	return t
+}
+
+// XYWH sets  X coordinate for element.
+func (t *RECT) X(x float64, dim ...string) *RECT {
+	t.node.XYWH("x", x, dim...)
+	return t
+}
+
+// Y sets  y coordinate for element.
+func (t *RECT) Y(x float64, dim ...string) *RECT {
+	t.node.XYWH("y", x, dim...)
 	return t
 }
 
@@ -261,8 +410,8 @@ func (t *TEXT) AppendTo(n iNode) *TEXT {
 }
 
 // Attr adds any user attribute.
-func (t *TEXT) Attr(attr, values string) *TEXT {
-	t.node.attrs[attr] = values
+func (t *TEXT) Attr(attr, value string) *TEXT {
+	t.node.attrs[attr] = value
 	return t
 }
 
@@ -272,7 +421,7 @@ func (t *TEXT) Class(id string) *TEXT {
 	return t
 }
 
-// GetID() returns element id class for string.
+// GetClass() returns element id class for string.
 func (t *TEXT) GetClass() string {
 	return t.node.class
 }
@@ -286,6 +435,12 @@ func (t *TEXT) ID(id string) *TEXT {
 // GetID() returns lement id.
 func (t *TEXT) GetID() string {
 	return t.node.id
+}
+
+// genID() creates element id.
+func (n *TEXT) genID() {
+	idCounter++
+	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
 // nodes returns inner node object
@@ -307,6 +462,44 @@ func (t *TEXT) Transform(tr transform.TRANSFORM) *TEXT {
 
 // >>>>>>> FINISH TEXT
 
+// >>>>>>> START TITLE
+
+// Attr adds any user attribute.
+func (t *TITLE) Attr(attr, value string) *TITLE {
+	t.node.attrs[attr] = value
+	return t
+}
+
+// Class(string) set element class.
+func (t *TITLE) Class(id string) *TITLE {
+	t.node.class = id
+	return t
+}
+
+// GetClass() returns element id class for string.
+func (t *TITLE) GetClass() string {
+	return t.node.class
+}
+
+// ID(string) set element id.
+func (t *TITLE) ID(id string) *TITLE {
+	t.node.id = id
+	return t
+}
+
+// GetID() returns lement id.
+func (t *TITLE) GetID() string {
+	return t.node.id
+}
+
+// genID() creates element id.
+func (n *TITLE) genID() {
+	idCounter++
+	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
+}
+
+// >>>>>>> FINISH TITLE
+
 // >>>>>>> START USE
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
@@ -322,8 +515,8 @@ func (t *USE) AppendTo(n iNode) *USE {
 }
 
 // Attr adds any user attribute.
-func (t *USE) Attr(attr, values string) *USE {
-	t.node.attrs[attr] = values
+func (t *USE) Attr(attr, value string) *USE {
+	t.node.attrs[attr] = value
 	return t
 }
 
@@ -333,7 +526,7 @@ func (t *USE) Class(id string) *USE {
 	return t
 }
 
-// GetID() returns element id class for string.
+// GetClass() returns element id class for string.
 func (t *USE) GetClass() string {
 	return t.node.class
 }
@@ -353,6 +546,12 @@ func (t *USE) ID(id string) *USE {
 // GetID() returns lement id.
 func (t *USE) GetID() string {
 	return t.node.id
+}
+
+// genID() creates element id.
+func (n *USE) genID() {
+	idCounter++
+	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
 // nodes returns inner node object

@@ -178,7 +178,7 @@ func (svg *SVG) appendIn(n iNode) {
 }
 
 // Rect() adds rect element to SVG
-func (svg *SVG) Rect(x1, y1, width, height int, st ...style.STYLE) *SVG {
+func (svg *SVG) Rect(x1, y1, width, height float64, st ...style.STYLE) *SVG {
 	r := Rect(x1, y1, width, height, st...)
 	return svg.Append(r)
 }

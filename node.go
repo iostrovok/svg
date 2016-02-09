@@ -3,10 +3,27 @@ package svg
 import (
 	"fmt"
 	"math"
+	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/iostrovok/svg/style"
 	"github.com/iostrovok/svg/transform"
+)
+
+var (
+	idCounter      = 0
+	coordinateKeys = map[string]bool{
+		`x`:      true,
+		`y`:      true,
+		`width`:  true,
+		`height`: true,
+		`cx`:     true,
+		`cy`:     true,
+		`rx`:     true,
+		`ry`:     true,
+		`r`:      true,
+	}
 )
 
 const (
@@ -36,6 +53,7 @@ func (c *coordinate) Source() string {
 type iNode interface {
 	Source() string
 	GetID() string
+	genID()
 	appendIn(iNode)
 	nodes() *node
 }
@@ -66,7 +84,8 @@ func newNode(st ...style.STYLE) *node {
 
 // Style sets the "style.STYLE" object
 func (n *node) mSource() string {
-	out := []string{}
+
+	out := n.sourceXYWH([]string{}, map[string]bool{})
 
 	for _, v := range n.xywh {
 		if s := v.Source(); s != "" {
@@ -97,6 +116,12 @@ func (n *node) ID(id string) {
 // GetID() returns element id.
 func (n *node) GetID() string {
 	return n.id
+}
+
+// genID() creates element id.
+func (n *node) genID() {
+	idCounter++
+	n.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
 // Class(string) set element class.
@@ -133,6 +158,23 @@ func (n *node) Append(in ...iNode) {
 	n.inner = append(n.inner, in...)
 }
 
+func (n *node) sourceXYWH(out []string, has map[string]bool) []string {
+
+	add := []string{}
+
+	for k, v := range n.xywh {
+		if !has[k] {
+			if s := v.Source(); s != "" {
+				add = append(add, s)
+			}
+		}
+	}
+
+	sort.Strings(add)
+
+	return append(out, add...)
+}
+
 // attrSource() returns attrebutes of tag as line
 func (n *node) attrSource() string {
 	out := []string{}
@@ -145,13 +187,7 @@ func (n *node) attrSource() string {
 		}
 	}
 
-	for k, v := range n.xywh {
-		if !has[k] {
-			if s := v.Source(); s != "" {
-				out = append(out, s)
-			}
-		}
-	}
+	out = n.sourceXYWH(out, has)
 
 	if !has[`style`] {
 		if s := n.styleSource(); s != "" {
@@ -184,7 +220,7 @@ func (n *node) XYWH(t string, c float64, dim ...string) {
 		x.dim = dim[0]
 	}
 
-	if t == `x` || t == `y` || t == `width` || t == `height` {
+	if coordinateKeys[t] {
 		n.xywh[t] = x
 	}
 }

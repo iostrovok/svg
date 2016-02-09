@@ -18,40 +18,77 @@ var (
 		`GROUP`: []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`},
 		`TEXT`:  []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`},
 		`LINE`:  []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`},
-		`RECT`:  []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`},
 		`USE`:   []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `x`, `y`, `width`, `height`},
+		`TITLE`: []string{`id`, `class`, `attr`},
+
+		`RECT`:   []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `x`, `y`, `width`, `height`, `rx`, `ry`},
+		`CIRCLE`: []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `cx`, `cy`, `r`},
 	}
 
 	tagReg       = regexp.MustCompile(`<TAG>`)
 	fileTemplate = `package svg
-import "github.com/iostrovok/svg/transform"
-import "github.com/iostrovok/svg/style"
+
+import (
+	"github.com/iostrovok/svg/transform"
+	"github.com/iostrovok/svg/style"
+	"strconv"
+)
 
 %s
 `
 
 	maps map[string]string = map[string]string{
 
+		`cx`: `// XYWH sets  CX coordinate for element.
+func (t *<TAG>) CX(x float64, dim ...string) *<TAG> {
+	t.node.XYWH("cx", x, dim...)
+	return t
+}`,
+
+		`cy`: `// XYWH sets  CY coordinate for element.
+func (t *<TAG>) CY(x float64, dim ...string) *<TAG> {
+	t.node.XYWH("cy", x, dim...)
+	return t
+}`,
+
+		`rx`: `// XYWH sets  RX coordinate for element.
+func (t *<TAG>) RX(x float64, dim ...string) *<TAG> {
+	t.node.XYWH("rx", x, dim...)
+	return t
+}`,
+
+		`ry`: `// XYWH sets  RY coordinate for element.
+func (t *<TAG>) RY(x float64, dim ...string) *<TAG> {
+	t.node.XYWH("ry", x, dim...)
+	return t
+}`,
+
+		`r`: `// XYWH sets radius for element.
+func (t *<TAG>) R(x float64, dim ...string) *<TAG> {
+	t.node.XYWH("r", x, dim...)
+	return t
+}`,
+
 		`x`: `// XYWH sets  X coordinate for element.
-func (t *USE) X(x float64, dim ...string) *USE {
+func (t *<TAG>) X(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("x", x, dim...)
 	return t
 }`,
 
 		`y`: `// Y sets  y coordinate for element.
-func (t *USE) Y(x float64, dim ...string) *USE {
+func (t *<TAG>) Y(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("y", x, dim...)
 	return t
 }`,
 
 		`width`: `// Width sets  width for element.
-func (t *USE) Width(x float64, dim ...string) *USE {
+func (t *<TAG>) Width(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("width", x, dim...)
 	return t
 }`,
 
 		`height`: `// Height sets height for element.
-func (t *USE) Height(x float64, dim ...string) *USE {
+func (t *<TAG>) Height(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("height", x, dim...)
 	return t
 }`,
@@ -70,6 +107,12 @@ func (t *<TAG>) ID(id string) *<TAG> {
 // GetID() returns lement id.
 func (t *<TAG>) GetID() string {
 	return t.node.id
+}
+
+// genID() creates element id.
+func (n *<TAG>) genID() {
+	idCounter++
+	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }`,
 
 		`class`: `// Class(string) set element class.
@@ -78,14 +121,14 @@ func (t *<TAG>) Class(id string) *<TAG> {
 	return t
 }
 
-// GetID() returns element id class for string.
+// GetClass() returns element id class for string.
 func (t *<TAG>) GetClass() string {
 	return t.node.class
 }`,
 
 		`attr`: `// Attr adds any user attribute.
-func (t *<TAG>) Attr(attr, values string) *<TAG> {
-	t.node.attrs[attr] = values
+func (t *<TAG>) Attr(attr, value string) *<TAG> {
+	t.node.attrs[attr] = value
 	return t
 }`,
 		`append`: `// Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
