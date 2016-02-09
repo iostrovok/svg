@@ -91,6 +91,97 @@ func (t *CIRCLE) Transform(tr transform.TRANSFORM) *CIRCLE {
 
 // >>>>>>> FINISH CIRCLE
 
+// >>>>>>> START ELLIPSE
+
+// Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
+func (t *ELLIPSE) Append(nodes ...iNode) *ELLIPSE {
+	t.node.Append(nodes...)
+	return t
+}
+
+// AppendTo is interface function
+func (t *ELLIPSE) AppendTo(n iNode) *ELLIPSE {
+	n.appendIn(t)
+	return t
+}
+
+// Attr adds any user attribute.
+func (t *ELLIPSE) Attr(attr, value string) *ELLIPSE {
+	t.node.attrs[attr] = value
+	return t
+}
+
+// Class(string) set element class.
+func (t *ELLIPSE) Class(id string) *ELLIPSE {
+	t.node.class = id
+	return t
+}
+
+// GetClass() returns element id class for string.
+func (t *ELLIPSE) GetClass() string {
+	return t.node.class
+}
+
+// XYWH sets  CX coordinate for element.
+func (t *ELLIPSE) CX(x float64, dim ...string) *ELLIPSE {
+	t.node.XYWH("cx", x, dim...)
+	return t
+}
+
+// XYWH sets  CY coordinate for element.
+func (t *ELLIPSE) CY(x float64, dim ...string) *ELLIPSE {
+	t.node.XYWH("cy", x, dim...)
+	return t
+}
+
+// ID(string) set element id.
+func (t *ELLIPSE) ID(id string) *ELLIPSE {
+	t.node.id = id
+	return t
+}
+
+// GetID() returns lement id.
+func (t *ELLIPSE) GetID() string {
+	return t.node.id
+}
+
+// genID() creates element id.
+func (n *ELLIPSE) genID() {
+	idCounter++
+	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
+}
+
+// nodes returns inner node object
+func (t *ELLIPSE) nodes() *node {
+	return t.node
+}
+
+// XYWH sets  RX coordinate for element.
+func (t *ELLIPSE) RX(x float64, dim ...string) *ELLIPSE {
+	t.node.XYWH("rx", x, dim...)
+	return t
+}
+
+// XYWH sets  RY coordinate for element.
+func (t *ELLIPSE) RY(x float64, dim ...string) *ELLIPSE {
+	t.node.XYWH("ry", x, dim...)
+	return t
+}
+
+// Style sets the "style.STYLE" object
+func (t *ELLIPSE) Style(st style.STYLE) *ELLIPSE {
+	t.node.Style(st)
+	return t
+}
+
+// Transform sets the "transform.TRANSFORM" object
+func (t *ELLIPSE) Transform(tr transform.TRANSFORM) *ELLIPSE {
+	t.node.Transform(tr)
+	return t
+}
+
+// >>>>>>> FINISH ELLIPSE
+
 // >>>>>>> START GROUP
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.

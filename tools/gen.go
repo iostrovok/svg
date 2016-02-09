@@ -21,8 +21,9 @@ var (
 		`USE`:   []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `x`, `y`, `width`, `height`},
 		`TITLE`: []string{`id`, `class`, `attr`},
 
-		`RECT`:   []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `x`, `y`, `width`, `height`, `rx`, `ry`},
-		`CIRCLE`: []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `cx`, `cy`, `r`},
+		`RECT`:    []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `x`, `y`, `width`, `height`, `rx`, `ry`},
+		`CIRCLE`:  []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `cx`, `cy`, `r`},
+		`ELLIPSE`: []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `cx`, `cy`, `rx`, `ry`},
 	}
 
 	tagReg       = regexp.MustCompile(`<TAG>`)
