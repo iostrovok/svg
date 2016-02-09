@@ -21,9 +21,11 @@ var (
 		`USE`:   []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `x`, `y`, `width`, `height`},
 		`TITLE`: []string{`id`, `class`, `attr`},
 
-		`RECT`:    []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `x`, `y`, `width`, `height`, `rx`, `ry`},
-		`CIRCLE`:  []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `cx`, `cy`, `r`},
-		`ELLIPSE`: []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `cx`, `cy`, `rx`, `ry`},
+		`RECT`:     []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `x`, `y`, `width`, `height`, `rx`, `ry`},
+		`CIRCLE`:   []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `cx`, `cy`, `r`},
+		`ELLIPSE`:  []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `cx`, `cy`, `rx`, `ry`},
+		`POLYLINE`: []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`},
+		`POLYGON`:  []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`},
 	}
 
 	tagReg       = regexp.MustCompile(`<TAG>`)

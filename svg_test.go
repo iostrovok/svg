@@ -18,6 +18,8 @@ var TestSVGWithRect string = `<rect height="20" width="20" x="10" y="10"/>`
 var TestSVGWithPath string = `<path d="M0,0 V100 v200 H300 h400"/>`
 var TestSVGWithCircle string = `<circle cx="600" cy="200" r="100"/>`
 var TestSVGWithEllipse string = `<ellipse cx="600" cy="200" rx="250" ry="100"/>`
+var TestSVGWithPolyline string = `<polyline points="10,20 10.1,20.23345"/>`
+var TestSVGWithPolygon string = `<polygon points="10,20 10.1,20.23345"/>`
 
 func (s SVGTestsSuite) Test_new(c *C) {
 	//c.Skip("Not now")
@@ -113,6 +115,22 @@ func (s SVGTestsSuite) Test_Append_Ellipse(c *C) {
 	m := New(100, 100).Append(cl)
 
 	c.Assert(cSL(m.InnerSource()), Equals, TestSVGWithEllipse)
+}
+
+func (s SVGTestsSuite) Test_Append_Polyline(c *C) {
+	//c.Skip("Not now")
+	cl := Polyline().Points(10.0, 20).Points(10.10, 20.23345)
+	m := New(100, 100).Append(cl)
+
+	c.Assert(cSL(m.InnerSource()), Equals, TestSVGWithPolyline)
+}
+
+func (s SVGTestsSuite) Test_Append_Polygon(c *C) {
+	//c.Skip("Not now")
+	cl := Polygon().Points(10.0, 20).Points(10.10, 20.23345)
+	m := New(100, 100).Append(cl)
+
+	c.Assert(cSL(m.InnerSource()), Equals, TestSVGWithPolygon)
 }
 
 func (s SVGTestsSuite) Test_Append_Circle(c *C) {

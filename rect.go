@@ -32,5 +32,5 @@ func Rect(x, y, width, height float64, s ...style.STYLE) *RECT {
 
 // Source() returns svg implementation of RECT element
 func (rect *RECT) Source() string {
-	return _Source(rect, rectTag, rectEndTag, rect.inner)
+	return _Source(rect, rectTag, rectEndTag, rect.node.inner)
 }

@@ -383,6 +383,140 @@ func (t *PATH) Transform(tr transform.TRANSFORM) *PATH {
 
 // >>>>>>> FINISH PATH
 
+// >>>>>>> START POLYGON
+
+// Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
+func (t *POLYGON) Append(nodes ...iNode) *POLYGON {
+	t.node.Append(nodes...)
+	return t
+}
+
+// AppendTo is interface function
+func (t *POLYGON) AppendTo(n iNode) *POLYGON {
+	n.appendIn(t)
+	return t
+}
+
+// Attr adds any user attribute.
+func (t *POLYGON) Attr(attr, value string) *POLYGON {
+	t.node.attrs[attr] = value
+	return t
+}
+
+// Class(string) set element class.
+func (t *POLYGON) Class(id string) *POLYGON {
+	t.node.class = id
+	return t
+}
+
+// GetClass() returns element id class for string.
+func (t *POLYGON) GetClass() string {
+	return t.node.class
+}
+
+// ID(string) set element id.
+func (t *POLYGON) ID(id string) *POLYGON {
+	t.node.id = id
+	return t
+}
+
+// GetID() returns lement id.
+func (t *POLYGON) GetID() string {
+	return t.node.id
+}
+
+// genID() creates element id.
+func (n *POLYGON) genID() {
+	idCounter++
+	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
+}
+
+// nodes returns inner node object
+func (t *POLYGON) nodes() *node {
+	return t.node
+}
+
+// Style sets the "style.STYLE" object
+func (t *POLYGON) Style(st style.STYLE) *POLYGON {
+	t.node.Style(st)
+	return t
+}
+
+// Transform sets the "transform.TRANSFORM" object
+func (t *POLYGON) Transform(tr transform.TRANSFORM) *POLYGON {
+	t.node.Transform(tr)
+	return t
+}
+
+// >>>>>>> FINISH POLYGON
+
+// >>>>>>> START POLYLINE
+
+// Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
+func (t *POLYLINE) Append(nodes ...iNode) *POLYLINE {
+	t.node.Append(nodes...)
+	return t
+}
+
+// AppendTo is interface function
+func (t *POLYLINE) AppendTo(n iNode) *POLYLINE {
+	n.appendIn(t)
+	return t
+}
+
+// Attr adds any user attribute.
+func (t *POLYLINE) Attr(attr, value string) *POLYLINE {
+	t.node.attrs[attr] = value
+	return t
+}
+
+// Class(string) set element class.
+func (t *POLYLINE) Class(id string) *POLYLINE {
+	t.node.class = id
+	return t
+}
+
+// GetClass() returns element id class for string.
+func (t *POLYLINE) GetClass() string {
+	return t.node.class
+}
+
+// ID(string) set element id.
+func (t *POLYLINE) ID(id string) *POLYLINE {
+	t.node.id = id
+	return t
+}
+
+// GetID() returns lement id.
+func (t *POLYLINE) GetID() string {
+	return t.node.id
+}
+
+// genID() creates element id.
+func (n *POLYLINE) genID() {
+	idCounter++
+	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
+}
+
+// nodes returns inner node object
+func (t *POLYLINE) nodes() *node {
+	return t.node
+}
+
+// Style sets the "style.STYLE" object
+func (t *POLYLINE) Style(st style.STYLE) *POLYLINE {
+	t.node.Style(st)
+	return t
+}
+
+// Transform sets the "transform.TRANSFORM" object
+func (t *POLYLINE) Transform(tr transform.TRANSFORM) *POLYLINE {
+	t.node.Transform(tr)
+	return t
+}
+
+// >>>>>>> FINISH POLYLINE
+
 // >>>>>>> START RECT
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
