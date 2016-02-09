@@ -1,6 +1,10 @@
 package svg
 
-import ()
+import (
+	"fmt"
+
+	"github.com/iostrovok/svg/style"
+)
 
 /*
 ‘class’
@@ -14,31 +18,36 @@ import ()
 ‘xlink:href’
 */
 
+const (
+	useTag    = `<use xlink:href="%s" `
+	useEndTag = `</use>`
+)
+
 type USE struct {
 	//iNode
 	*node
-	id  string
-	use string
+	href string
+	use  string
 }
 
 // Constructor of "use" object
-func Use(use string, attr ...map[string]string) *USE {
-	t := &USE{
-		node: newNode(),
-		use:  use,
+func Use(s ...style.STYLE) *USE {
+	return &USE{
+		node: newNode(s...),
 	}
+}
 
-	if len(attr) > 0 {
-		for k, v := range attr[0] {
-			t.Attr(k, v)
-		}
-	}
-
+// XYWH sets  X coordinate for element.
+func (t *USE) Href(href string) *USE {
+	t.href = href
 	return t
 }
 
 // Source() returns svg implementation of USE element
 func (use *USE) Source() string {
-	body := `<` + use.use
-	return _Source(use, body, `</`+use.use+`>`, use.node.inner)
+	if use.href == "" {
+		return ""
+	}
+	body := fmt.Sprintf(useTag, use.href)
+	return _Source(use, body, useEndTag, use.node.inner)
 }
