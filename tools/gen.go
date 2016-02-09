@@ -19,7 +19,7 @@ var (
 		`TEXT`:  []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`},
 		`LINE`:  []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`},
 		`RECT`:  []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`},
-		`USE`:   []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`},
+		`USE`:   []string{`node`, `id`, `class`, `attr`, `append`, `style`, `transform`, `x`, `y`, `width`, `height`},
 	}
 
 	tagReg       = regexp.MustCompile(`<TAG>`)
@@ -31,6 +31,31 @@ import "github.com/iostrovok/svg/style"
 `
 
 	maps map[string]string = map[string]string{
+
+		`x`: `// XYWH sets  X coordinate for element.
+func (t *USE) X(x float64, dim ...string) *USE {
+	t.node.XYWH("x", x, dim...)
+	return t
+}`,
+
+		`y`: `// Y sets  y coordinate for element.
+func (t *USE) Y(x float64, dim ...string) *USE {
+	t.node.XYWH("y", x, dim...)
+	return t
+}`,
+
+		`width`: `// Width sets  width for element.
+func (t *USE) Width(x float64, dim ...string) *USE {
+	t.node.XYWH("width", x, dim...)
+	return t
+}`,
+
+		`height`: `// Height sets height for element.
+func (t *USE) Height(x float64, dim ...string) *USE {
+	t.node.XYWH("height", x, dim...)
+	return t
+}`,
+
 		`node`: `// nodes returns inner node object
 func (t *<TAG>) nodes() *node {
 	return t.node
@@ -108,12 +133,14 @@ func main() {
 	sort.Strings(tagsList)
 
 	for _, one := range tagsList {
+		lines = append(lines, "// >>>>>>> START "+one)
 		list := tags[one]
 		sort.Strings(list)
 		for _, k := range list {
 			res := tagReg.ReplaceAllString(maps[k], one)
 			lines = append(lines, res)
 		}
+		lines = append(lines, "// >>>>>>> FINISH "+one)
 	}
 
 	fmt.Printf("\n: %s\n", filelName)

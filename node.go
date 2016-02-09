@@ -2,6 +2,7 @@ package svg
 
 import (
 	"fmt"
+	"math"
 	"strings"
 
 	"github.com/iostrovok/svg/style"
@@ -9,8 +10,28 @@ import (
 )
 
 const (
-	classLine = `class="%s"`
+	classLine        = `class="%s"`
+	coordinateDim    = `%s="%.2f%s"`
+	coordinateDimInt = `%s="%d%s"`
 )
+
+type coordinate struct {
+	c        float64
+	typ, dim string
+}
+
+// XYWH sets `coordinates` for element.
+func (c *coordinate) Source() string {
+	if c == nil {
+		return ""
+	}
+
+	if math.Floor(c.c) == c.c {
+		return fmt.Sprintf(coordinateDimInt, c.typ, int(c.c), c.dim)
+	}
+
+	return fmt.Sprintf(coordinateDim, c.typ, c.c, c.dim)
+}
 
 type iNode interface {
 	Source() string
@@ -26,6 +47,7 @@ type node struct {
 	tr        transform.TRANSFORM
 	inner     []iNode
 	attrs     map[string]string
+	xywh      map[string]*coordinate
 }
 
 func newNode(st ...style.STYLE) *node {
@@ -34,6 +56,7 @@ func newNode(st ...style.STYLE) *node {
 		st:    style.STYLE{},
 		tr:    transform.TRANSFORM{},
 		attrs: map[string]string{},
+		xywh:  map[string]*coordinate{},
 	}
 	if len(st) != 0 {
 		n.st = st[0]
@@ -44,6 +67,12 @@ func newNode(st ...style.STYLE) *node {
 // Style sets the "style.STYLE" object
 func (n *node) mSource() string {
 	out := []string{}
+
+	for _, v := range n.xywh {
+		if s := v.Source(); s != "" {
+			out = append(out, s)
+		}
+	}
 
 	if st := n.styleSource(); st != "" {
 		out = append(out, st)
@@ -116,6 +145,14 @@ func (n *node) attrSource() string {
 		}
 	}
 
+	for k, v := range n.xywh {
+		if !has[k] {
+			if s := v.Source(); s != "" {
+				out = append(out, s)
+			}
+		}
+	}
+
 	if !has[`style`] {
 		if s := n.styleSource(); s != "" {
 			out = append(out, s)
@@ -135,4 +172,19 @@ func (n *node) attrSource() string {
 	}
 
 	return strings.Join(out, ` `)
+}
+
+// XYWH sets `coordinates` for element.
+func (n *node) XYWH(t string, c float64, dim ...string) {
+	x := &coordinate{
+		c:   c,
+		typ: t,
+	}
+	if len(dim) > 0 {
+		x.dim = dim[0]
+	}
+
+	if t == `x` || t == `y` || t == `width` || t == `height` {
+		n.xywh[t] = x
+	}
 }

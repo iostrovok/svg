@@ -2,6 +2,8 @@ package svg
 import "github.com/iostrovok/svg/transform"
 import "github.com/iostrovok/svg/style"
 
+// >>>>>>> START GROUP
+
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
 func (t *GROUP) Append(nodes ...iNode) *GROUP {
 	t.node.Append(nodes...)
@@ -58,6 +60,10 @@ func (t *GROUP) Transform(tr transform.TRANSFORM) *GROUP {
 	t.node.Transform(tr)
 	return t
 }
+
+// >>>>>>> FINISH GROUP
+
+// >>>>>>> START LINE
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
 func (t *LINE) Append(nodes ...iNode) *LINE {
@@ -116,6 +122,10 @@ func (t *LINE) Transform(tr transform.TRANSFORM) *LINE {
 	return t
 }
 
+// >>>>>>> FINISH LINE
+
+// >>>>>>> START PATH
+
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
 func (t *PATH) Append(nodes ...iNode) *PATH {
 	t.node.Append(nodes...)
@@ -172,6 +182,10 @@ func (t *PATH) Transform(tr transform.TRANSFORM) *PATH {
 	t.node.Transform(tr)
 	return t
 }
+
+// >>>>>>> FINISH PATH
+
+// >>>>>>> START RECT
 
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
 func (t *RECT) Append(nodes ...iNode) *RECT {
@@ -230,6 +244,10 @@ func (t *RECT) Transform(tr transform.TRANSFORM) *RECT {
 	return t
 }
 
+// >>>>>>> FINISH RECT
+
+// >>>>>>> START TEXT
+
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
 func (t *TEXT) Append(nodes ...iNode) *TEXT {
 	t.node.Append(nodes...)
@@ -287,6 +305,10 @@ func (t *TEXT) Transform(tr transform.TRANSFORM) *TEXT {
 	return t
 }
 
+// >>>>>>> FINISH TEXT
+
+// >>>>>>> START USE
+
 // Append() inserts content, specified by the parameter, to the end of each element in the set of matched elements.
 func (t *USE) Append(nodes ...iNode) *USE {
 	t.node.Append(nodes...)
@@ -316,6 +338,12 @@ func (t *USE) GetClass() string {
 	return t.node.class
 }
 
+// Height sets height for element.
+func (t *USE) Height(x float64, dim ...string) *USE {
+	t.node.XYWH("height", x, dim...)
+	return t
+}
+
 // ID(string) set element id.
 func (t *USE) ID(id string) *USE {
 	t.node.id = id
@@ -343,3 +371,23 @@ func (t *USE) Transform(tr transform.TRANSFORM) *USE {
 	t.node.Transform(tr)
 	return t
 }
+
+// Width sets  width for element.
+func (t *USE) Width(x float64, dim ...string) *USE {
+	t.node.XYWH("width", x, dim...)
+	return t
+}
+
+// XYWH sets  X coordinate for element.
+func (t *USE) X(x float64, dim ...string) *USE {
+	t.node.XYWH("x", x, dim...)
+	return t
+}
+
+// Y sets  y coordinate for element.
+func (t *USE) Y(x float64, dim ...string) *USE {
+	t.node.XYWH("y", x, dim...)
+	return t
+}
+
+// >>>>>>> FINISH USE
