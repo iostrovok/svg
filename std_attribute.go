@@ -37,19 +37,19 @@ func (t *CIRCLE) GetClass() string {
 	return t.node.class
 }
 
-// XYWH sets  CX coordinate for element.
+// CX sets cx coordinate for CIRCLE element.
 func (t *CIRCLE) CX(x float64, dim ...string) *CIRCLE {
 	t.node.XYWH("cx", x, dim...)
 	return t
 }
 
-// XYWH sets  CY coordinate for element.
+// CY sets cy coordinate for CIRCLE element.
 func (t *CIRCLE) CY(x float64, dim ...string) *CIRCLE {
 	t.node.XYWH("cy", x, dim...)
 	return t
 }
 
-// ID(string) set element id.
+// ID(string) sets element id.
 func (t *CIRCLE) ID(id string) *CIRCLE {
 	t.node.id = id
 	return t
@@ -66,12 +66,12 @@ func (n *CIRCLE) genID() {
 	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
-// nodes returns inner node object
+// nodes returns inner node objects for CIRCLE
 func (t *CIRCLE) nodes() *node {
 	return t.node
 }
 
-// XYWH sets radius for element.
+// R sets radius for CIRCLE element.
 func (t *CIRCLE) R(x float64, dim ...string) *CIRCLE {
 	t.node.XYWH("r", x, dim...)
 	return t
@@ -122,19 +122,19 @@ func (t *ELLIPSE) GetClass() string {
 	return t.node.class
 }
 
-// XYWH sets  CX coordinate for element.
+// CX sets cx coordinate for ELLIPSE element.
 func (t *ELLIPSE) CX(x float64, dim ...string) *ELLIPSE {
 	t.node.XYWH("cx", x, dim...)
 	return t
 }
 
-// XYWH sets  CY coordinate for element.
+// CY sets cy coordinate for ELLIPSE element.
 func (t *ELLIPSE) CY(x float64, dim ...string) *ELLIPSE {
 	t.node.XYWH("cy", x, dim...)
 	return t
 }
 
-// ID(string) set element id.
+// ID(string) sets element id.
 func (t *ELLIPSE) ID(id string) *ELLIPSE {
 	t.node.id = id
 	return t
@@ -151,18 +151,18 @@ func (n *ELLIPSE) genID() {
 	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
-// nodes returns inner node object
+// nodes returns inner node objects for ELLIPSE
 func (t *ELLIPSE) nodes() *node {
 	return t.node
 }
 
-// XYWH sets  RX coordinate for element.
+// RX sets rx coordinate for ELLIPSE element.
 func (t *ELLIPSE) RX(x float64, dim ...string) *ELLIPSE {
 	t.node.XYWH("rx", x, dim...)
 	return t
 }
 
-// XYWH sets  RY coordinate for element.
+// RY sets ry coordinate for ELLIPSE element.
 func (t *ELLIPSE) RY(x float64, dim ...string) *ELLIPSE {
 	t.node.XYWH("ry", x, dim...)
 	return t
@@ -213,7 +213,7 @@ func (t *GROUP) GetClass() string {
 	return t.node.class
 }
 
-// ID(string) set element id.
+// ID(string) sets element id.
 func (t *GROUP) ID(id string) *GROUP {
 	t.node.id = id
 	return t
@@ -230,7 +230,7 @@ func (n *GROUP) genID() {
 	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
-// nodes returns inner node object
+// nodes returns inner node objects for GROUP
 func (t *GROUP) nodes() *node {
 	return t.node
 }
@@ -280,7 +280,7 @@ func (t *LINE) GetClass() string {
 	return t.node.class
 }
 
-// ID(string) set element id.
+// ID(string) sets element id.
 func (t *LINE) ID(id string) *LINE {
 	t.node.id = id
 	return t
@@ -297,7 +297,7 @@ func (n *LINE) genID() {
 	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
-// nodes returns inner node object
+// nodes returns inner node objects for LINE
 func (t *LINE) nodes() *node {
 	return t.node
 }
@@ -347,7 +347,7 @@ func (t *PATH) GetClass() string {
 	return t.node.class
 }
 
-// ID(string) set element id.
+// ID(string) sets element id.
 func (t *PATH) ID(id string) *PATH {
 	t.node.id = id
 	return t
@@ -364,7 +364,7 @@ func (n *PATH) genID() {
 	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
-// nodes returns inner node object
+// nodes returns inner node objects for PATH
 func (t *PATH) nodes() *node {
 	return t.node
 }
@@ -414,7 +414,7 @@ func (t *POLYGON) GetClass() string {
 	return t.node.class
 }
 
-// ID(string) set element id.
+// ID(string) sets element id.
 func (t *POLYGON) ID(id string) *POLYGON {
 	t.node.id = id
 	return t
@@ -431,7 +431,7 @@ func (n *POLYGON) genID() {
 	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
-// nodes returns inner node object
+// nodes returns inner node objects for POLYGON
 func (t *POLYGON) nodes() *node {
 	return t.node
 }
@@ -481,7 +481,7 @@ func (t *POLYLINE) GetClass() string {
 	return t.node.class
 }
 
-// ID(string) set element id.
+// ID(string) sets element id.
 func (t *POLYLINE) ID(id string) *POLYLINE {
 	t.node.id = id
 	return t
@@ -498,7 +498,7 @@ func (n *POLYLINE) genID() {
 	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
-// nodes returns inner node object
+// nodes returns inner node objects for POLYLINE
 func (t *POLYLINE) nodes() *node {
 	return t.node
 }
@@ -548,13 +548,13 @@ func (t *RECT) GetClass() string {
 	return t.node.class
 }
 
-// Height sets height for element.
+// Height sets height for RECT element.
 func (t *RECT) Height(x float64, dim ...string) *RECT {
 	t.node.XYWH("height", x, dim...)
 	return t
 }
 
-// ID(string) set element id.
+// ID(string) sets element id.
 func (t *RECT) ID(id string) *RECT {
 	t.node.id = id
 	return t
@@ -571,18 +571,18 @@ func (n *RECT) genID() {
 	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
-// nodes returns inner node object
+// nodes returns inner node objects for RECT
 func (t *RECT) nodes() *node {
 	return t.node
 }
 
-// XYWH sets  RX coordinate for element.
+// RX sets rx coordinate for RECT element.
 func (t *RECT) RX(x float64, dim ...string) *RECT {
 	t.node.XYWH("rx", x, dim...)
 	return t
 }
 
-// XYWH sets  RY coordinate for element.
+// RY sets ry coordinate for RECT element.
 func (t *RECT) RY(x float64, dim ...string) *RECT {
 	t.node.XYWH("ry", x, dim...)
 	return t
@@ -600,19 +600,19 @@ func (t *RECT) Transform(tr transform.TRANSFORM) *RECT {
 	return t
 }
 
-// Width sets  width for element.
+// Width sets width for RECT element.
 func (t *RECT) Width(x float64, dim ...string) *RECT {
 	t.node.XYWH("width", x, dim...)
 	return t
 }
 
-// XYWH sets  X coordinate for element.
+// X sets x coordinate for RECT element.
 func (t *RECT) X(x float64, dim ...string) *RECT {
 	t.node.XYWH("x", x, dim...)
 	return t
 }
 
-// Y sets  y coordinate for element.
+// Y sets y coordinate for RECT element.
 func (t *RECT) Y(x float64, dim ...string) *RECT {
 	t.node.XYWH("y", x, dim...)
 	return t
@@ -651,7 +651,7 @@ func (t *TEXT) GetClass() string {
 	return t.node.class
 }
 
-// ID(string) set element id.
+// ID(string) sets element id.
 func (t *TEXT) ID(id string) *TEXT {
 	t.node.id = id
 	return t
@@ -668,7 +668,7 @@ func (n *TEXT) genID() {
 	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
-// nodes returns inner node object
+// nodes returns inner node objects for TEXT
 func (t *TEXT) nodes() *node {
 	return t.node
 }
@@ -706,7 +706,7 @@ func (t *TITLE) GetClass() string {
 	return t.node.class
 }
 
-// ID(string) set element id.
+// ID(string) sets element id.
 func (t *TITLE) ID(id string) *TITLE {
 	t.node.id = id
 	return t
@@ -756,13 +756,13 @@ func (t *USE) GetClass() string {
 	return t.node.class
 }
 
-// Height sets height for element.
+// Height sets height for USE element.
 func (t *USE) Height(x float64, dim ...string) *USE {
 	t.node.XYWH("height", x, dim...)
 	return t
 }
 
-// ID(string) set element id.
+// ID(string) sets element id.
 func (t *USE) ID(id string) *USE {
 	t.node.id = id
 	return t
@@ -779,7 +779,7 @@ func (n *USE) genID() {
 	n.node.id = "_auto_id_generate_" + strconv.Itoa(idCounter)
 }
 
-// nodes returns inner node object
+// nodes returns inner node objects for USE
 func (t *USE) nodes() *node {
 	return t.node
 }
@@ -796,19 +796,19 @@ func (t *USE) Transform(tr transform.TRANSFORM) *USE {
 	return t
 }
 
-// Width sets  width for element.
+// Width sets width for USE element.
 func (t *USE) Width(x float64, dim ...string) *USE {
 	t.node.XYWH("width", x, dim...)
 	return t
 }
 
-// XYWH sets  X coordinate for element.
+// X sets x coordinate for USE element.
 func (t *USE) X(x float64, dim ...string) *USE {
 	t.node.XYWH("x", x, dim...)
 	return t
 }
 
-// Y sets  y coordinate for element.
+// Y sets y coordinate for USE element.
 func (t *USE) Y(x float64, dim ...string) *USE {
 	t.node.XYWH("y", x, dim...)
 	return t

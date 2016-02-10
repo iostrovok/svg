@@ -42,66 +42,66 @@ import (
 
 	maps map[string]string = map[string]string{
 
-		`cx`: `// XYWH sets  CX coordinate for element.
+		`cx`: `// CX sets cx coordinate for <TAG> element.
 func (t *<TAG>) CX(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("cx", x, dim...)
 	return t
 }`,
 
-		`cy`: `// XYWH sets  CY coordinate for element.
+		`cy`: `// CY sets cy coordinate for <TAG> element.
 func (t *<TAG>) CY(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("cy", x, dim...)
 	return t
 }`,
 
-		`rx`: `// XYWH sets  RX coordinate for element.
+		`rx`: `// RX sets rx coordinate for <TAG> element.
 func (t *<TAG>) RX(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("rx", x, dim...)
 	return t
 }`,
 
-		`ry`: `// XYWH sets  RY coordinate for element.
+		`ry`: `// RY sets ry coordinate for <TAG> element.
 func (t *<TAG>) RY(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("ry", x, dim...)
 	return t
 }`,
 
-		`r`: `// XYWH sets radius for element.
+		`r`: `// R sets radius for <TAG> element.
 func (t *<TAG>) R(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("r", x, dim...)
 	return t
 }`,
 
-		`x`: `// XYWH sets  X coordinate for element.
+		`x`: `// X sets x coordinate for <TAG> element.
 func (t *<TAG>) X(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("x", x, dim...)
 	return t
 }`,
 
-		`y`: `// Y sets  y coordinate for element.
+		`y`: `// Y sets y coordinate for <TAG> element.
 func (t *<TAG>) Y(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("y", x, dim...)
 	return t
 }`,
 
-		`width`: `// Width sets  width for element.
+		`width`: `// Width sets width for <TAG> element.
 func (t *<TAG>) Width(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("width", x, dim...)
 	return t
 }`,
 
-		`height`: `// Height sets height for element.
+		`height`: `// Height sets height for <TAG> element.
 func (t *<TAG>) Height(x float64, dim ...string) *<TAG> {
 	t.node.XYWH("height", x, dim...)
 	return t
 }`,
 
-		`node`: `// nodes returns inner node object
+		`node`: `// nodes returns inner node objects for <TAG>
 func (t *<TAG>) nodes() *node {
 	return t.node
 }`,
 
-		`id`: `// ID(string) set element id.
+		`id`: `// ID(string) sets element id.
 func (t *<TAG>) ID(id string) *<TAG> {
 	t.node.id = id
 	return t
