@@ -40,6 +40,10 @@ func (pl *POLYGON) Points(p ...float64) *POLYGON {
 // Source() returns svg implementation of POLYGON element
 func (pl *POLYGON) Source() string {
 
+	if len(pl.points) == 0 {
+		return ""
+	}
+
 	coods := []string{}
 	for i := 0; i < len(pl.points)-1; i += 2 {
 		coods = append(coods, printNumber(pl.points[i])+","+printNumber(pl.points[i+1]))
