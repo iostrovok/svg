@@ -2,7 +2,6 @@ package svg
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/iostrovok/svg/style"
@@ -56,18 +55,18 @@ type TEXT struct {
 
 	id string
 
-	x, y   int
+	x, y   float64
 	dim_xy string
 	has_xy bool
 
-	dx, dy  int
+	dx, dy  float64
 	dim_dxy string
 
 	anchor       string
 	href         string
-	rotate       []int
-	textLength   int
-	lengthAdjust int
+	rotate       []float64
+	textLength   float64
+	lengthAdjust float64
 }
 
 // Text is the constructor of text object
@@ -116,20 +115,18 @@ func (text *TEXT) Source() string {
 }
 
 func (text *TEXT) bodyTags(body string) string {
+
 	res := []string{body}
-	if text.dx != 0 {
-		res = append(res, fmt.Sprintf(`dx="%d%s"`, text.dx, text.dim_dxy))
-	}
-	if text.dy != 0 {
-		res = append(res, fmt.Sprintf(`dy="%d%s"`, text.dy, text.dim_dxy))
+	if text.dx != 0 || text.dy != 0 {
+		res = append(res, fmt.Sprintf(`dx="%s" dy="%s"`, printNumber(text.dx, text.dim_dxy), printNumber(text.dy, text.dim_dxy)))
 	}
 	if text.has_xy {
-		res = append(res, fmt.Sprintf(`x="%d%s" y="%d%s"`, text.x, text.dim_xy, text.y, text.dim_xy))
+		res = append(res, fmt.Sprintf(`x="%s" y="%s"`, printNumber(text.x, text.dim_xy), printNumber(text.y, text.dim_xy)))
 	}
 	if len(text.rotate) > 0 {
 		a := make([]string, len(text.rotate))
 		for i, v := range text.rotate {
-			a[i] = strconv.Itoa(v)
+			a[i] = printNumber(v)
 		}
 		res = append(res, fmt.Sprintf(`rotate="%s"`, strings.Join(a, ",")))
 	}
@@ -168,7 +165,7 @@ func (text *TEXT) AddString(str string) *TEXT {
 }
 
 // XY sets the absolute coordinates of object
-func (text *TEXT) XY(x, y int, dim ...string) *TEXT {
+func (text *TEXT) XY(x, y float64, dim ...string) *TEXT {
 	text.has_xy = true
 	text.x = x
 	text.y = y
@@ -179,9 +176,9 @@ func (text *TEXT) XY(x, y int, dim ...string) *TEXT {
 }
 
 // XY sets the relative coordinates of object
-func (text *TEXT) DX(dx, dy int, dim ...string) *TEXT {
-	text.x = dx
-	text.y = dy
+func (text *TEXT) DXY(dx, dy float64, dim ...string) *TEXT {
+	text.dx = dx
+	text.dy = dy
 	if len(dim) > 0 {
 		text.dim_dxy = dim[0]
 	}
@@ -189,7 +186,7 @@ func (text *TEXT) DX(dx, dy int, dim ...string) *TEXT {
 }
 
 // Rotate set the rotate attribute
-func (text *TEXT) Rotate(r ...int) *TEXT {
+func (text *TEXT) Rotate(r ...float64) *TEXT {
 	text.rotate = r
 	return text
 }

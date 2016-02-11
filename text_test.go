@@ -76,6 +76,28 @@ func (s TEXTTestsSuite) Test_Attrs(c *C) {
 	c.Assert(cSL(res), Equals, obtained)
 }
 
+func (s TEXTTestsSuite) Test_DXY(c *C) {
+	//c.Skip("Not now")
+
+	obtained := cSL(`<text dx="10px" dy="10px">Next hello, out there</text>`)
+
+	text := Text().DXY(10, 10, "px").AddString("Next hello, out there")
+
+	res := text.Source()
+	c.Assert(cSL(res), Equals, obtained)
+}
+
+func (s TEXTTestsSuite) Test_XY(c *C) {
+	//c.Skip("Not now")
+
+	obtained := cSL(`<text x="10.1px" y="110px">Next hello, out there</text>`)
+
+	text := Text().XY(10.1, 110, "px").AddString("Next hello, out there")
+
+	res := text.Source()
+	c.Assert(cSL(res), Equals, obtained)
+}
+
 func (s TEXTTestsSuite) Test_ID(c *C) {
 	//c.Skip("Not now")
 
