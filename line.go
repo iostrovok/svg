@@ -12,17 +12,17 @@ type LINE struct {
 
 	id string
 
-	x1, x2 int
-	y1, y2 int
+	x1, x2 float64
+	y1, y2 float64
 }
 
 const (
-	lineTag    = `<line x1="%d" y1="%d" x2="%d" y2="%d"`
+	lineTag    = `<line x1="%s" y1="%s" x2="%s" y2="%s"`
 	lineEndTag = `</line>`
 )
 
 // Constructor of "line" object
-func Line(x1, y1, x2, y2 int, s ...style.STYLE) *LINE {
+func Line(x1, y1, x2, y2 float64, s ...style.STYLE) *LINE {
 	return &LINE{
 		node: newNode(s...),
 
@@ -33,6 +33,6 @@ func Line(x1, y1, x2, y2 int, s ...style.STYLE) *LINE {
 
 // Source() returns svg implementation of LINE element
 func (line *LINE) Source() string {
-	body := fmt.Sprintf(lineTag, line.x1, line.y1, line.x2, line.y2)
+	body := fmt.Sprintf(lineTag, printNumber(line.x1), printNumber(line.y1), printNumber(line.x2), printNumber(line.y2))
 	return _Source(line, body, lineEndTag, line.node.inner)
 }

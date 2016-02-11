@@ -192,7 +192,7 @@ func (svg *SVG) Rect(x1, y1, width, height float64, st ...style.STYLE) *SVG {
 }
 
 // Line() adds line element to SVG
-func (svg *SVG) Line(x1, y1, x2, y2 int, st ...style.STYLE) *SVG {
+func (svg *SVG) Line(x1, y1, x2, y2 float64, st ...style.STYLE) *SVG {
 	n := Line(x1, y1, x2, y2, st...)
 	return svg.Append(n)
 }
