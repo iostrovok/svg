@@ -37,10 +37,6 @@ func (pl *POLYLINE) Points(p ...float64) *POLYLINE {
 	return pl
 }
 
-func printNumber(n float64) string {
-	return strings.TrimRight(strings.TrimRight(fmt.Sprintf("%f", n), "0"), ".")
-}
-
 // Source() returns svg implementation of POLYLINE element
 func (pl *POLYLINE) Source() string {
 

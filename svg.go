@@ -98,6 +98,14 @@ func (svg *SVG) GetViewBox() (x, y, width, height int) {
 	return
 }
 
+func printNumber(n float64, dims ...string) string {
+	dim := ""
+	if len(dims) > 0 {
+		dim = dims[0]
+	}
+	return strings.TrimRight(strings.TrimRight(fmt.Sprintf("%f", n), "0"), ".") + dim
+}
+
 // Source() returns svg implementation of SVG element
 func (svg *SVG) Source() string {
 	vb := ""
