@@ -14,7 +14,7 @@ type SVGTestsSuite struct{}
 var _ = Suite(&SVGTestsSuite{})
 
 var TestSVGWithLine string = `<line x1="10" y1="10" x2="20" y2="20"/>`
-var TestSVGWithRect string = `<rect height="20" width="20" x="10" y="10"/>`
+var TestSVGWithRect string = `<rect height="40" width="30" x="10" y="20"/>`
 var TestSVGWithPath string = `<path d="M0,0 V100 v200 H300 h400"/>`
 var TestSVGWithCircle string = `<circle cx="600" cy="200" r="100"/>`
 var TestSVGWithEllipse string = `<ellipse cx="600" cy="200" rx="250" ry="100"/>`
@@ -73,7 +73,7 @@ func (s SVGTestsSuite) Test_AppendTo_Line(c *C) {
 func (s SVGTestsSuite) Test_AppendTo_Rect(c *C) {
 	//c.Skip("Not now")
 	m := New(100, 100)
-	Rect(10, 10, 20, 20).AppendTo(m)
+	Rect(10, 20, 30, 40).AppendTo(m)
 	c.Assert(cSL(m.InnerSource()), Equals, TestSVGWithRect)
 }
 
@@ -103,7 +103,7 @@ func (s SVGTestsSuite) Test_Append_Line(c *C) {
 
 func (s SVGTestsSuite) Test_Append_Rect(c *C) {
 	//c.Skip("Not now")
-	r := Rect(10, 10, 20, 20)
+	r := Rect(10, 20, 30, 40)
 	m := New(100, 100).Append(r)
 
 	c.Assert(cSL(m.InnerSource()), Equals, TestSVGWithRect)

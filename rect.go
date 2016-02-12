@@ -23,7 +23,7 @@ func Rect(x, y, width, height float64, s ...style.STYLE) *RECT {
 	}
 
 	rect.X(x)
-	rect.Y(x)
+	rect.Y(y)
 	rect.Width(width)
 	rect.Height(height)
 

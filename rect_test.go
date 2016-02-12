@@ -28,7 +28,7 @@ func (s RECTTestsSuite) Test_rect(c *C) {
 func (s RECTTestsSuite) Test_rect2(c *C) {
 	//c.Skip("Not now")
 
-	obtained := cSL(`<rect height="4" width="3" x="1" y="1" style="stroke:rgb(10,20,30)"/>`)
+	obtained := cSL(`<rect height="4" width="3" x="1" y="2" style="stroke:rgb(10,20,30)"/>`)
 
 	l := Rect(1, 2, 3, 4, style.Style().StrokeRGB(10, 20, 30))
 	res := l.Source()
@@ -38,7 +38,7 @@ func (s RECTTestsSuite) Test_rect2(c *C) {
 func (s RECTTestsSuite) Test_Append_Title(c *C) {
 	//c.Skip("Not now")
 
-	obtained := cSL(`<rect height="4" width="3" x="1" y="1"><title>WWW</title></rect>`)
+	obtained := cSL(`<rect height="4" width="3" x="1" y="2"><title>WWW</title></rect>`)
 
 	l := Rect(1, 2, 3, 4)
 	t := Title("WWW")
@@ -50,7 +50,7 @@ func (s RECTTestsSuite) Test_Append_Title(c *C) {
 func (s RECTTestsSuite) Test_Style(c *C) {
 	//c.Skip("Not now")
 
-	obtained := cSL(`<rect height="4" width="3" x="1" y="1" style="fill:rgb(1,2,3)"><title>WWW</title></rect>`)
+	obtained := cSL(`<rect height="4" width="3" x="1" y="2" style="fill:rgb(1,2,3)"><title>WWW</title></rect>`)
 
 	l := Rect(1, 2, 3, 4)
 	st := style.Style().FillRGB(1, 2, 3)
@@ -61,7 +61,7 @@ func (s RECTTestsSuite) Test_Style(c *C) {
 func (s RECTTestsSuite) Test_Transform(c *C) {
 	//c.Skip("Not now")
 
-	obtained := cSL(`<rect height="4" width="3" x="1" y="1" transform="matrix(12.00, 34.00, 45.00, 34.50, 212.00, 4.45)">
+	obtained := cSL(`<rect height="4" width="3" x="1" y="2" transform="matrix(12.00, 34.00, 45.00, 34.50, 212.00, 4.45)">
 <title>WWW</title>
 </rect>`)
 
@@ -74,7 +74,7 @@ func (s RECTTestsSuite) Test_Transform(c *C) {
 func (s RECTTestsSuite) Test_ID(c *C) {
 	//c.Skip("Not now")
 
-	check := cSL(`<rect id="id-1" height="4" width="3" x="1" y="1"/>`)
+	check := cSL(`<rect id="id-1" height="4" width="3" x="1" y="2"/>`)
 
 	t := Rect(1, 2, 3, 4)
 	t = t.ID("id-1")
