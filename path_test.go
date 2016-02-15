@@ -61,7 +61,7 @@ func (s PATHTestsSuite) Test_path_Lxxx(c *C) {
 
 	p := Path(style.Style().StrokeRGB(10, 20, 30)).M(2, 2)
 	for i := 0; i < 10; i++ {
-		p = p.L(i, i+1)
+		p = p.L(float64(i), float64(i+1))
 	}
 	c.Assert(cSL(p.Source()), Equals, obtained)
 }
