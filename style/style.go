@@ -25,6 +25,11 @@ func Style() STYLE {
 	}
 }
 
+// Ref() returns reference to style element
+func (style STYLE) Ref() *STYLE {
+	return &style
+}
+
 // Source() returns svg implementation of STYLE element
 func (style STYLE) Source() string {
 
