@@ -19,3 +19,10 @@ test-style:
 test-trans:
 	@cd ./transform & go test ./transform
 
+
+# reinstall
+reinstall:
+	@git push
+	@go get -u github.com/iostrovok/svg/style
+	@go get -u github.com/iostrovok/svg/transform
+	@go get -u github.com/iostrovok/svg
